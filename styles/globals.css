@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.text-gradient {
+  /* background-image: linear-gradient(
+    to right top,
+    #22b8cf,
+    #7dc7e7,
+    rgb(1, 180, 228)
+  ); */
+
+  background-image: linear-gradient(
+    to right top,
+
+    #0b7285,
+    #1098ad,
+    #3bc9db
+  );
+
+  /* #e2e9fa,
+  #ffffff */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  /* color: rgb(1, 180, 228); */
+}
+
+/* Tailwind styles */
+.nav-bar {
+  @apply md:h-[90px] h-[80px] flex items-center justify-between;
+}
+
+.logo-font {
+  @apply font-Courgette text-gradient sm:text-[30px] text-[24px] font-bold cursor-pointer tracking-tight no-underline z-10;
+}
+
+.nav-list {
+  @apply list-none  flex tracking-wider   text-[16px] font-semibold  gap-8  dark:text-white text-slate-900 cursor-pointer;
+}
+
+.toggle-mode-hover {
+  @apply dark:text-white text-slate-900 dark:hover:bg-slate-800 py-2 px-2 hover:bg-slate-100  rounded-md;
+}
+
+.theme-toggle {
+  @apply hidden  w-24 absolute md:top-[9%] md:right-[14%]
+  py-5 flex-col md:flex  border-2 dark:border-gray-800 z-50  border-slate-300 rounded-[10px] shadow-md  dark:bg-primaryDark bg-white;
+}
+
+.theme-toggle-mobile {
+  @apply w-24 absolute bottom-10 -left-4
+  py-5 flex-col flex md:hidden  border-2 dark:border-gray-800 z-50  border-slate-300 rounded-[10px] shadow-md  dark:bg-primaryDark bg-white;
+}
+/* Movie Card */
+.movie-card {
+  box-shadow: 0 2.4rem 4.8rem rgb(0 0 0 / 8%);
+  overflow: hidden;
+}
+/* absolute bottom-0  left-4 */
