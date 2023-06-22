@@ -9,6 +9,8 @@ interface ButtonProps {
   disabled?: boolean;
   outline?: boolean;
   useIcon?: boolean;
+  action?: boolean;
+  signIn?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({
@@ -20,6 +22,7 @@ const Button: FC<ButtonProps> = ({
   disabled,
   outline,
   useIcon,
+  signIn,
 }) => {
   return (
     <button
@@ -28,16 +31,15 @@ const Button: FC<ButtonProps> = ({
       className={`
         disabled:opacity-70
         disabled:cursor-not-allowed
-        rounded-full
         font-semibold
         hover:opacity-80
         transition
-        border-2
+    
       
         ${fullWidth ? 'w-full' : 'w-fit'}
-        ${secondary ? 'bg-white' : 'bg-sky-500'}
+        ${secondary ? 'bg-white' : 'dark:bg-bgBlue bg-bgBlue1'}
         ${secondary ? 'text-black' : 'text-white'}
-        ${secondary ? 'border-black' : 'border-sky-500'}
+        ${secondary ? 'border-black' : 'bg-bgBlue'}
         ${large ? 'text-md' : 'text-base'}
         ${large ? 'px-5' : 'px-4'}
         ${large ? 'py-3' : 'py-2'}
@@ -45,6 +47,8 @@ const Button: FC<ButtonProps> = ({
         ${outline ? 'border-white' : ''}
         ${outline ? 'text-white' : ''}
         ${useIcon ? 'flex items-center justify-center gap-2' : ''}
+        ${signIn ? ' rounded-full border-2' : 'rounded-md'}
+    
       `}
     >
       {useIcon ? <FcGoogle size={20} /> : ''}

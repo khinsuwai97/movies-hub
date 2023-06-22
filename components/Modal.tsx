@@ -101,6 +101,7 @@ const Modal: FC<ModalProps> = ({
               <Button
                 disabled={disabled}
                 label={actionLabel}
+                signIn={true}
                 secondary
                 fullWidth
                 large
@@ -112,6 +113,7 @@ const Modal: FC<ModalProps> = ({
                 fullWidth
                 large
                 useIcon={true}
+                signIn={true}
               />
               {footer}
             </div>

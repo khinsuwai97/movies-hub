@@ -46,7 +46,7 @@
 }
 
 .theme-toggle {
-  @apply hidden  w-24 absolute md:top-[9%] md:right-[14%]
+  @apply hidden  w-24 absolute md:top-[9%] md:right-[15%]
   py-5 flex-col md:flex  border-2 dark:border-gray-800 z-50  border-slate-300 rounded-[10px] shadow-md  dark:bg-primaryDark bg-white;
 }
 
@@ -54,9 +54,29 @@
   @apply w-24 absolute bottom-10 -left-4
   py-5 flex-col flex md:hidden  border-2 dark:border-gray-800 z-50  border-slate-300 rounded-[10px] shadow-md  dark:bg-primaryDark bg-white;
 }
+
+.theme-toggle-signout {
+  @apply hidden  w-28 absolute md:top-[9%] md:right-[4%]
+  py-5 flex-col md:flex  border-2 dark:border-gray-800 z-50  border-slate-300 rounded-[10px] shadow-md  dark:bg-primaryDark bg-white;
+}
+
+.theme-toggle-signout-mobile {
+  @apply w-28 absolute bottom-10 right-1
+  py-5 flex-col flex md:hidden  border-2 dark:border-gray-800 z-50  border-slate-300 rounded-[10px] shadow-md  dark:bg-primaryDark bg-white;
+}
+
+.movie-list-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+}
+
+.item-border {
+  border-bottom: 0.5px;
+  border-color: #1e2125;
+}
+
 /* Movie Card */
 .movie-card {
   box-shadow: 0 2.4rem 4.8rem rgb(0 0 0 / 8%);
   overflow: hidden;
 }
-/* absolute bottom-0  left-4 */

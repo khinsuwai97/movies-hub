@@ -10,7 +10,7 @@ const Search = (props: Props) => {
         <form className="flex justify-center items-center relative">
           <input
             type="text"
-            placeholder="Search Movie, Series"
+            placeholder="Search Movies"
             className="sm:py-[10px] py-[6px] w-[70%]  sm:w-[60%]  px-[50px] rounded-[10px] text-sm  sm:text-[16px] border-slate-500  border-solid border-2 dark:bg-primaryDark "
           />
           <button

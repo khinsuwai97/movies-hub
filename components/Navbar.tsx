@@ -9,16 +9,18 @@ import { navLinks } from '@/data';
 import MobileMenu from './MobileMenu';
 import BottomMobileMenu from './BottomMobileMenu';
 import ThemeToggle from './ThemeToggle';
-import ThemeToggleMobile from './ThemeToggleMobile';
 import { useTheme } from 'next-themes';
 import useLoginModal from '@/hooks/useLoginModal';
-
+import SignOut from './SignOut';
 const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [toggleMode, setToggleMode] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [toggleAuth, setToggleAuth] = useState(false);
   const { theme } = useTheme();
   const { onOpen } = useLoginModal();
+  // will be dynamic later
+  const isAuth = false;
 
   useEffect(() => {
     setMounted(true);
@@ -44,6 +46,10 @@ const Navbar = () => {
 
   const handleToggleMode = () => {
     setToggleMode((prevMode) => !prevMode);
+  };
+
+  const handleToggleAuth = () => {
+    setToggleAuth((prevAuth) => !prevAuth);
   };
 
   return (
@@ -85,9 +91,20 @@ const Navbar = () => {
             <Link href="/search" className="toggle-mode-hover">
               <FiSearch className="text-[24px] " />
             </Link>
-            <button className="toggle-mode-hover" onClick={onOpen}>
-              <BsFillPersonPlusFill className=" text-[24px] " />
-            </button>
+
+            {isAuth ? (
+              <button
+                className={`toggle-mode-hover flex items-center`}
+                onClick={handleToggleAuth}
+              >
+                {`Khin Su Wai`}
+                <HiChevronDown />
+              </button>
+            ) : (
+              <button className="toggle-mode-hover" onClick={onOpen}>
+                <BsFillPersonPlusFill className=" text-[24px] " />
+              </button>
+            )}
           </div>
         </nav>
       </header>
@@ -96,9 +113,11 @@ const Navbar = () => {
         onClick={handleToggleMode}
         onOpen={onOpen}
         toggleMode={toggleMode}
+        toggleAuth={toggleAuth}
+        handleToogleAuth={handleToggleAuth}
       />
+      {toggleAuth && <SignOut />}
       {toggleMode && <ThemeToggle closeTheme={closeToggleMode} />}
-      {/* {toggleMode && <ThemeToggleMobile closeTheme={closeToggleMode} />} */}
     </>
   );
 };

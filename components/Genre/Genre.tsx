@@ -26,7 +26,7 @@ const genres = [
 
 const Genre = (props: Props) => {
   return (
-    <div className="flex flex-wrap gap-2 text-sm px-[10px] mb-1">
+    <div className="flex flex-wrap gap-2 text-sm px-[10px] mb-2">
       {genres.map((genre) => {
         return (
           <button

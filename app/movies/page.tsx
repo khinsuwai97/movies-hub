@@ -1,6 +1,7 @@
 import React from 'react';
 import Genre from '@/components/Genre/Genre';
 import MovieCard from '@/components/Movies/MovieCard';
+import CustomPagination from '@/components/Pagination/CustomPagination';
 
 interface Props {}
 
@@ -13,6 +14,8 @@ const Movies = (props: Props) => {
             Discover Movies
           </h1>
           <Genre />
+          <MovieCard />
+          <CustomPagination />
         </div>
       </section>
     </>
