@@ -1,6 +1,7 @@
 'use client';
-import React from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { unavailable } from '@/lib/image';
 import {
   BsBookmarkCheck,
@@ -8,18 +9,26 @@ import {
   BsBookmarkFill,
   BsFillBookmarkPlusFill,
 } from 'react-icons/bs';
-import Link from 'next/link';
-import item from '@/mockdata/photos/poster.png';
 import useRegisterModal from '@/hooks/useRegisterModal';
-import { useRouter } from 'next/navigation';
-export interface MovieListProps {}
+import CustomPagination from '../Pagination/CustomPagination';
+import { imagePath } from '@/lib/image';
+export interface MovieListProps {
+  id: number;
+  title: string | undefined;
+  image: string;
+  mediaType: string;
+  releaseDate: string;
+  vote: number;
+}
 
-const imageStyle = {
-  width: 'auto',
-  height: 'auto',
-};
-
-const MovieList = ({ title, image, genere, rating, id, date }) => {
+const MovieList: FC<MovieListProps> = ({
+  id,
+  title,
+  image,
+  mediaType,
+  releaseDate,
+  vote,
+}) => {
   const { onOpen } = useRegisterModal();
   const router = useRouter();
 
@@ -39,47 +48,38 @@ const MovieList = ({ title, image, genere, rating, id, date }) => {
       onClick={goToDetailPage}
     >
       <Image
-        src={unavailable}
-        alt={title}
+        src={`${imagePath}${image}` || unavailable}
+        alt={title || 'movie photo'}
         width={200}
         height={50}
+        style={{ objectFit: 'contain' }}
         priority={true}
-        className="object-cover "
-        style={imageStyle}
       />
 
       <h3 className="px-1 pb-3 pt-4 font-semibold leading-tight text-[16px] text-center">
         {title}
       </h3>
 
-      <div className="flex dark:text-slate-200 justify-between items-center px-4 pt-2 pb-3">
-        <p className="text-sm">{genere}</p>
-        <p className="text-sm">2023-06-12</p>
+      <div className="flex dark:text-slate-200 justify-between items-center px-2 pt-2 pb-3">
+        <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
+        <p className="text-sm">{releaseDate}</p>
       </div>
       <div
-        className={`w-[30px] h-[30px] rounded-full flex justify-center items-center c mb-2 cursor-pointer absolute top-[10px] right-[10px] bg-sky-600   z-20`}
+        className={`w-[25px] h-[25px] rounded-full flex justify-center items-center c mb-2 cursor-pointer absolute top-[10px] right-[10px] ${
+          vote >= 5 ? 'bg-sky-600' : 'bg-pink-600'
+        }   z-20`}
       >
-        <span className="text-[10px] text-white ">{rating}</span>
+        <span className="text-[10px] text-white ">
+          {Number(vote.toFixed(1))}
+        </span>
       </div>
       <span onClick={handleOpenRegister}>
-        <BsBookmarkFill className="text-[22px] absolute text-slate-500 left-1  top-3 cursor-pointer z-20 " />
+        <BsBookmarkFill className="text-[22px] absolute text-cyan-700 left-1  top-3 cursor-pointer z-20 " />
       </span>
     </div>
   );
 };
-// text-pink-600
-// bg-pink-800
-// text-cyan-700
 
 export default MovieList;
-{
-  /* <div className="px-4 pt-2 pb-3"></div> */
-}
-{
-  /* <div
-className={`w-[30px] h-[30px] rounded-full flex justify-center items-center c mb-2 cursor-pointer absolute top-[10px] right-[10px] bg-sky-600    z-20`}
->
-<span className="text-[10px] text-white ">{rating}</span>
-</div> */
-}
-// top-[30%] left-[10px]
+// width={200}
+// height={50}

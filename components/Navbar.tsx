@@ -77,7 +77,7 @@ const Navbar = () => {
             <ul className="nav-list">
               {navLinks.map((link) => {
                 return (
-                  <li key={link.title} className="hover:underline">
+                  <li key={link.title} className="pb-1 hover:underline">
                     <Link href={link.href}>{link.title}</Link>
                   </li>
                 );

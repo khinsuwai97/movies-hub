@@ -5,6 +5,8 @@ export const img_500 = 'https://image.tmdb.org/t/p/w500';
 // contentModal and singleContent
 export const unavailable =
   'https://www.movienewz.com/img/films/poster-holder.jpg';
+('https://image.tmdb.org/t/p/w300/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg');
+export const imagePath = 'https://image.tmdb.org/t/p/w300';
 
 // contentModal
 export const unavailableLandscape =

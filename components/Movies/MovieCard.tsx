@@ -1,29 +1,31 @@
-import React from 'react';
-import { movies } from '@/mockdata/photos/data';
+import React, { useState } from 'react';
 import MovieList from './MovieList';
+import { MovieInterface } from '@/types';
 
-interface Props {}
+interface MovieCardProps {
+  movies: MovieInterface[];
+}
 
-const MovieCard = (props: Props) => {
+const MovieCard = ({ movies }: MovieCardProps) => {
   return (
-    <div className="flex justify-around flex-wrap p-4 ">
-      {movies.map((movie) => {
-        return (
-          <MovieList
-            key={movie.id}
-            id={movie.id}
-            title={movie.title}
-            image={movie.image}
-            genere={movie.genere}
-            date={movie.date}
-            rating={movie.rating}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className="flex justify-around flex-wrap p-4 ">
+        {movies.map((movie) => {
+          return (
+            <MovieList
+              key={movie.id}
+              id={movie.id}
+              title={movie.name || movie.title}
+              image={movie.poster_path}
+              mediaType={movie.media_type}
+              releaseDate={movie.release_date || movie.first_air_date}
+              vote={movie.vote_average}
+            />
+          );
+        })}
+      </div>
+    </>
   );
 };
 
 export default MovieCard;
-// lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-2
-// grid sm:grid-cols-3 grid-cols-2

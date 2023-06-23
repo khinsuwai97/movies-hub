@@ -8,7 +8,16 @@ const nextConfig = {
         port: '',
         pathname: '/img/films/poster-holder.jpg',
       },
+      {
+        protocol: 'https',
+        hostname: 'image.tmdb.org',
+        port: '',
+        pathname: '/t/p/w300/**',
+      },
     ],
+  },
+  env: {
+    BASE_URL: process.env.BASE_URL,
   },
 };
 
