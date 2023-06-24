@@ -9,6 +9,7 @@ import { useTheme } from 'next-themes';
 interface CustomPaginationProps {
   setPage: React.Dispatch<React.SetStateAction<number>>;
   page: number;
+  totalPages: number;
 }
 
 const getDesignTokens = (mode: PaletteMode) => ({
@@ -35,7 +36,11 @@ const getDesignTokens = (mode: PaletteMode) => ({
   },
 });
 
-const CustomPagination: FC<CustomPaginationProps> = ({ page, setPage }) => {
+const CustomPagination: FC<CustomPaginationProps> = ({
+  page,
+  setPage,
+  totalPages = 10,
+}) => {
   // this mounted state is added for next js hydration error
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
@@ -56,7 +61,7 @@ const CustomPagination: FC<CustomPaginationProps> = ({ page, setPage }) => {
     <div className="flex justify-center items-center md:pb-0 pb-[90px]">
       <ThemeProvider theme={darkModeTheme}>
         <Pagination
-          count={10}
+          count={totalPages}
           page={page}
           color="primary"
           onChange={handleChange}

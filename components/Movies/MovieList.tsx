@@ -19,6 +19,7 @@ export interface MovieListProps {
   mediaType: string;
   releaseDate: string;
   vote: number;
+  type?: string;
 }
 
 const MovieList: FC<MovieListProps> = ({
@@ -28,6 +29,7 @@ const MovieList: FC<MovieListProps> = ({
   mediaType,
   releaseDate,
   vote,
+  type,
 }) => {
   const { onOpen } = useRegisterModal();
   const router = useRouter();
@@ -42,13 +44,24 @@ const MovieList: FC<MovieListProps> = ({
     router.push(`/movies/${id}`);
   };
 
+  let typeContent;
+  if (type === 'movie') {
+    typeContent = <p className="text-sm">Movie</p>;
+  } else if (type === 'series') {
+    typeContent = <p className="text-sm">Series</p>;
+  } else {
+    typeContent = (
+      <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
+    );
+  }
+
   return (
     <div
       className="movie-card hover:-translate-y-2 ease-in duration-300 rounded-lg relative sm:w-[200px] w-[160px] flex flex-col cursor-pointer dark:bg-bgDark bg-white  mb-4"
       onClick={goToDetailPage}
     >
       <Image
-        src={`${imagePath}${image}` || unavailable}
+        src={image ? `${imagePath}${image}` : unavailable}
         alt={title || 'movie photo'}
         width={200}
         height={50}
@@ -61,7 +74,7 @@ const MovieList: FC<MovieListProps> = ({
       </h3>
 
       <div className="flex dark:text-slate-200 justify-between items-center px-2 pt-2 pb-3">
-        <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
+        {typeContent}
         <p className="text-sm">{releaseDate}</p>
       </div>
       <div

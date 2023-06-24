@@ -12,7 +12,7 @@ const MobileMenu: FC<MobileMenuProps> = () => {
           return (
             <li
               key={link.title}
-              className="hover:underline text-[16px] tracking-wide"
+              className="hover:underline text-sm tracking-wide"
             >
               <Link href={link.href}>{link.title}</Link>
             </li>

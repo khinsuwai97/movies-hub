@@ -5,7 +5,7 @@ export const img_500 = 'https://image.tmdb.org/t/p/w500';
 // contentModal and singleContent
 export const unavailable =
   'https://www.movienewz.com/img/films/poster-holder.jpg';
-('https://image.tmdb.org/t/p/w300/rktDFPbfHfUbArZ6OOOKsXcv0Bm.jpg');
+
 export const imagePath = 'https://image.tmdb.org/t/p/w300';
 
 // contentModal
@@ -15,3 +15,11 @@ export const unavailableLandscape =
 // For Carousel
 export const noPicture =
   'https://upload.wikimedia.org/wikipedia/en/6/60/No_Picture.jpg';
+
+// <Image
+// src={img1}
+// width="0"
+// height="0"
+// sizes="100vw"
+// className="w-full h-auto"
+// />

@@ -1,10 +1,4 @@
-'use client';
-import React, { useState } from 'react';
-import MovieCard from '@/components/Movies/MovieCard';
-import CustomPagination from '@/components/Pagination/CustomPagination';
-import Loading from '@/components/Loading';
-import useTrendingMovies from '@/hooks/useTrendingMovies';
-import Error from '@/components/Error';
+import Trending from '@/components/MoviesPage/Trending';
 
 interface Props {}
 // const movies = [
@@ -30,21 +24,7 @@ interface Props {}
 //   },
 // ];
 
-const Home = (props: Props) => {
-  const [page, setPage] = useState(1);
-  const { data, isLoading, error } = useTrendingMovies(page);
-
-  let content;
-  if (error) {
-    content = <Error message={error.message} />;
-  } else {
-    if (isLoading) {
-      content = <Loading />;
-    } else {
-      content = <MovieCard movies={data?.results!} />;
-    }
-  }
-
+const Home = () => {
   return (
     <>
       <section className="md:pt-22 md:pb-[90px] pb-3 pt-6 ">
@@ -52,8 +32,7 @@ const Home = (props: Props) => {
           <h1 className="uppercase tracking-wider text-center font-semibold sm:text-[26px] text-[22px] text-slate-900 dark:text-slate-200 mb-6 ">
             Trending Today
           </h1>
-          {content}
-          <CustomPagination page={page} setPage={setPage} />
+          <Trending />
         </div>
       </section>
     </>

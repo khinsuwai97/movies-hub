@@ -4,9 +4,10 @@ import { MovieInterface } from '@/types';
 
 interface MovieCardProps {
   movies: MovieInterface[];
+  type?: string;
 }
 
-const MovieCard = ({ movies }: MovieCardProps) => {
+const MovieCard = ({ movies, type }: MovieCardProps) => {
   return (
     <>
       <div className="flex justify-around flex-wrap p-4 ">
@@ -20,6 +21,7 @@ const MovieCard = ({ movies }: MovieCardProps) => {
               mediaType={movie.media_type}
               releaseDate={movie.release_date || movie.first_air_date}
               vote={movie.vote_average}
+              type={type}
             />
           );
         })}
