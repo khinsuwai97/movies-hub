@@ -47,7 +47,7 @@ const MovieList: FC<MovieListProps> = ({
   let typeContent;
   if (type === 'movie') {
     typeContent = <p className="text-sm">Movie</p>;
-  } else if (type === 'series') {
+  } else if (type === 'tv') {
     typeContent = <p className="text-sm">Series</p>;
   } else {
     typeContent = (

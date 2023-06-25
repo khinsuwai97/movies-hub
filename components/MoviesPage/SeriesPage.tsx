@@ -63,7 +63,7 @@ const SeriesPage = () => {
   } else if (moviesLoading) {
     moviesContent = <Loading />;
   } else {
-    moviesContent = <MovieCard movies={moviesData?.results!} type="Series" />;
+    moviesContent = <MovieCard movies={moviesData?.results!} type="tv" />;
   }
 
   return (

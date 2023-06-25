@@ -8,7 +8,6 @@ import Error from '../Error';
 import GenreLoading from '../Watchlist/GenreLoading';
 import useMovies from '@/hooks/useMovies';
 import CustomPagination from '../Pagination/CustomPagination';
-
 import MovieCard from '../Movies/MovieCard';
 import Loading from '../Loading';
 

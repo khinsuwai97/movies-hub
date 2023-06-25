@@ -22,7 +22,10 @@ const MovieDetail = (props: Props) => {
             Transformer:Rise of the sun dls ls lsfkdlfs fkdlsdk dlf sfl (2023)
           </h2>
           {/* condition render later */}
-          {/* <p className="sm:text-[20px] text-[18px] mb-4 ">No Way Home</p> */}
+          <p className="sm:text-[20px] text-[18px] mb-4 ">No Way Home</p>
+          <p className="mb-4 text-[16px] leading-[28px]">
+            05-19-2023 . Action,Thriller,Crime
+          </p>
 
           <div className="flex gap-4 items-center mb-2">
             <div

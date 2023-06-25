@@ -33,3 +33,11 @@ export const TrailerButton = ({ text }: ActionButtonProps) => {
     </button>
   );
 };
+
+export const BackButton = () => {
+  return (
+    <button className=" sm:text-[16px] text-sm text-slate-800 dark:text-slate-200 outline-none border-b-2 dark:border-slate-500  hover:border-gray-400 dark:hover:text-white">
+      <Link href="/">Back to Home</Link>
+    </button>
+  );
+};

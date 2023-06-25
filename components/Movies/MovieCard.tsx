@@ -11,7 +11,7 @@ const MovieCard = ({ movies, type }: MovieCardProps) => {
   return (
     <>
       <div className="flex justify-around flex-wrap p-4 ">
-        {movies.map((movie) => {
+        {movies?.map((movie) => {
           return (
             <MovieList
               key={movie.id}
