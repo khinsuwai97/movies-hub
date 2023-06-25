@@ -1,6 +1,7 @@
+'use client';
 import Link from 'next/link';
 import { AiFillYoutube } from 'react-icons/ai';
-
+import { useRouter } from 'next/navigation';
 export const Button = (props) => {
   return (
     <Link href={props.section}>
@@ -35,9 +36,14 @@ export const TrailerButton = ({ text }: ActionButtonProps) => {
 };
 
 export const BackButton = () => {
+  const router = useRouter();
   return (
-    <button className=" sm:text-[16px] text-sm text-slate-800 dark:text-slate-200 outline-none border-b-2 dark:border-slate-500  hover:border-gray-400 dark:hover:text-white">
-      <Link href="/">Back to Home</Link>
+    <button
+      className=" text-sm text-slate-800 dark:text-slate-300 outline-none  dark:border-slate-500 border-b-2  hover:border-gray-400 dark:hover:text-white 
+      "
+      onClick={() => router.back()}
+    >
+      Back to previous page
     </button>
   );
 };

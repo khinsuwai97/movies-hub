@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import MovieList from './MovieList';
 import { MovieInterface } from '@/types';
 

@@ -29,6 +29,7 @@ const SearchPage = () => {
   }, [page, data]);
 
   let content;
+  if (!data) return;
 
   if (error) {
     content = <Error message={error.message} />;
@@ -38,7 +39,7 @@ const SearchPage = () => {
     } else if (query && (!data?.results || data?.results.length === 0)) {
       content = resultError;
     } else {
-      content = <MovieCard movies={data?.results!} type={selectedType} />;
+      content = <MovieCard movies={data?.results} type={selectedType} />;
     }
   }
 
@@ -54,7 +55,7 @@ const SearchPage = () => {
         <CustomPagination
           page={page}
           setPage={setPage}
-          totalPages={data?.total_pages!}
+          totalPages={data?.total_pages}
         />
       )}
     </>

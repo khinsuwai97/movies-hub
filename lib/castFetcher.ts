@@ -1,8 +1,8 @@
 import axios from 'axios';
 import options from './options';
-import { ResponseType } from '@/types';
+import { CastsResponse } from '@/types';
 
-const fetcher = (url: string): Promise<ResponseType> =>
+const fetcher = (url: string): Promise<CastsResponse> =>
   axios.get(url, options).then((res) => res.data);
 
 export default fetcher;

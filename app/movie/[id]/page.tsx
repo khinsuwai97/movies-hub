@@ -1,6 +1,7 @@
+'use client';
 import React from 'react';
-import { BackButton } from '@/components/LinkButton';
 import DetailPage from '@/components/MoviesPage/DetailPage';
+import { usePathname } from 'next/navigation';
 
 interface Params {
   params: {
@@ -9,12 +10,14 @@ interface Params {
 }
 
 const MovieOverview = ({ params: { id } }: Params) => {
+  const pathName = usePathname();
+  const type = pathName.split('/')[1];
+
   return (
     <section id="home" className="md:pt-22 md:pb-[90px] pb-3 pt-6 ">
-      <div className="xl:max-w-[1280px] w-full flex flex-row gap-4 mb-4 pl-[70px]">
-        <BackButton />
+      <div className="container mx-auto mb-4">
+        <DetailPage movieId={id} type={type} />
       </div>
-      <DetailPage movieId={id} />
     </section>
   );
 };

@@ -1,22 +1,23 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { unavailable } from '@/lib/image';
 import Image from 'next/image';
+import { CastsResponse } from '@/types';
+import { imagePath } from '@/lib/image';
 
-const images = [
-  { img: unavailable, name: 'Peter Parker lorieo fdlf d', id: '1' },
-  { img: unavailable, name: 'Peter Parker', id: '2' },
-  { img: unavailable, name: 'Peter Parker', id: '3' },
-  { img: unavailable, name: 'Peter Parker', id: '4' },
-  { img: unavailable, name: 'Peter Parker', id: '5' },
-  { img: unavailable, name: 'Peter Parker', id: '6' },
-];
+interface ImageCarouselProps {
+  castsData: CastsResponse;
+}
 
-interface Props {}
+const ImageCarousel: FC<ImageCarouselProps> = ({ castsData }) => {
+  const casts = castsData.cast.map((cast) => ({
+    id: cast.id,
+    name: cast.name,
+    profileImage: cast.profile_path,
+  }));
 
-const ImageCarousel = (props: Props) => {
   // this mounted state is added for next js hydration error
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -24,19 +25,21 @@ const ImageCarousel = (props: Props) => {
   }, []);
   if (!mounted) return null;
   const handleDragStart = (e: any) => e.preventDefault();
-  const items = images.map((img) => {
+  const items = casts.map((cast) => {
     return (
-      <div key={img.id} className="flex flex-col items-center  ">
+      <div key={cast.id} className="flex flex-col items-center  ">
         <Image
-          src={img.img}
-          alt={img.name}
+          src={
+            cast.profileImage ? `${imagePath}${cast.profileImage}` : unavailable
+          }
+          alt={cast.name}
           height={100}
           width={100}
           onDragStart={handleDragStart}
           role="presentation"
           className="rounded-md mb-2"
         />
-        <p className="text-sm max-w-[100px]">{img.name}</p>
+        <p className="text-sm text-center max-w-[100px] ">{cast.name}</p>
       </div>
     );
   });

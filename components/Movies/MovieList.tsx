@@ -41,7 +41,13 @@ const MovieList: FC<MovieListProps> = ({
 
   const goToDetailPage = (e: any) => {
     e.stopPropagation();
-    router.push(`/movies/${id}`);
+
+    if (mediaType === 'movie' || type === 'movie') {
+      router.push(`/movie/${id}`);
+    }
+    if (mediaType === 'tv' || type === 'tv') {
+      router.push(`/tv/${id}`);
+    }
   };
 
   let typeContent;
@@ -94,5 +100,3 @@ const MovieList: FC<MovieListProps> = ({
 };
 
 export default MovieList;
-// width={200}
-// height={50}
