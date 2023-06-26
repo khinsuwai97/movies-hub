@@ -7,6 +7,8 @@ import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Link from 'next/link';
 import ThemeToggleMobile from './ThemeToggleMobile';
 import SingOutMobile from './SingOutMobile';
+import useCurrentUser from '@/hooks/useCurrentUser';
+import { useSession } from 'next-auth/react';
 
 interface BottomMobileMenuProps {
   onClick: () => void;
@@ -25,7 +27,8 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
   toggleAuth,
   handleToogleAuth,
 }) => {
-  const isAuth = true;
+  const { data: session } = useSession();
+
   return (
     <>
       <nav className="w-full bottom-0 fixed z-50 dark:bg-secondaryDark bg-slate-100  pt-4 pb-6 px-[48px] block md:hidden  border-t-2 dark:border-gray-800 border-slate-300 shadow-sm ">
@@ -39,12 +42,12 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
           <Link href="/search" className="toggle-mode-hover hover:bg-slate-200">
             <FiSearch className=" text-[22px] " />
           </Link>
-          {isAuth ? (
+          {session && session?.user ? (
             <button
               className={`toggle-mode-hover hover:bg-slate-200 flex items-center`}
               onClick={handleToogleAuth}
             >
-              {`khin Su Wai`}
+              {session?.user.name}
               <HiChevronUp />
             </button>
           ) : (

@@ -9,6 +9,7 @@ import { CastsResponse, DetailResponse, YoutubeVideoResponse } from '@/types';
 
 import { img_500 } from '@/lib/image';
 import useWatchList from '@/hooks/useWatchList';
+import { successTaost, errorToast } from '@/lib/showToast';
 
 interface MovieDeatailProps {
   detail: DetailResponse;
@@ -23,6 +24,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
   const handleAddToWatchList = useCallback(() => {
     const checkItemInCart = watchlists.find((item) => item.id === detail.id);
     if (checkItemInCart) {
+      errorToast(detail.title || detail.name);
       return;
     }
     addToWatchlist({
@@ -32,6 +34,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
       releaseDate: detail.release_date || detail.seasons[0].air_date,
       vote: detail.vote_average,
     });
+    successTaost(detail.title || detail.name);
   }, [
     detail.id,
     detail.title,

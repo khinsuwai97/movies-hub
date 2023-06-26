@@ -7,32 +7,33 @@ import Error from '@/components/Error';
 import CustomPagination from '../Pagination/CustomPagination';
 
 const Trending = () => {
-  const [page, setPage] = useState(1);
-  const { data, isLoading, error } = useTrendingMovies(page);
+  return <p>trending</p>;
+  // const [page, setPage] = useState(1);
+  // const { data, isLoading, error } = useTrendingMovies(page);
 
-  useEffect(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-  }, [page, data]);
+  // useEffect(() => {
+  //   window.scrollTo({
+  //     top: 0,
+  //     behavior: 'smooth',
+  //   });
+  // }, [page, data]);
 
-  let content;
-  if (error) {
-    content = <Error message={error.message} />;
-  } else {
-    if (isLoading) {
-      content = <Loading />;
-    } else {
-      content = <MovieCard movies={data?.results!} />;
-    }
-  }
-  return (
-    <>
-      {content}
-      <CustomPagination page={page} setPage={setPage} totalPages={10} />
-    </>
-  );
+  // let content;
+  // if (error) {
+  //   content = <Error message={error.message} />;
+  // } else {
+  //   if (isLoading) {
+  //     content = <Loading />;
+  //   } else {
+  //     content = <MovieCard movies={data?.results!} />;
+  //   }
+  // }
+  // return (
+  //   <>
+  //     {content}
+  //     <CustomPagination page={page} setPage={setPage} totalPages={10} />
+  //   </>
+  // );
 };
 
 export default Trending;

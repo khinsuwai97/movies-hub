@@ -12,15 +12,17 @@ import ThemeToggle from './ThemeToggle';
 import { useTheme } from 'next-themes';
 import useLoginModal from '@/hooks/useLoginModal';
 import SignOut from './SignOut';
+import { useSession } from 'next-auth/react';
+import NavbarItems from './NavbarItems';
+
 const Navbar = () => {
+  const { data: session } = useSession();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [toggleMode, setToggleMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [toggleAuth, setToggleAuth] = useState(false);
   const { theme } = useTheme();
   const { onOpen } = useLoginModal();
-  // will be dynamic later
-  const isAuth = false;
 
   useEffect(() => {
     setMounted(true);
@@ -52,6 +54,10 @@ const Navbar = () => {
     setToggleAuth((prevAuth) => !prevAuth);
   };
 
+  const closeToggleAuth = () => {
+    setToggleAuth(false);
+  };
+
   return (
     <>
       <header className="w-full py-0 px-[48px] z-50 relative  shadow-sm">
@@ -77,9 +83,12 @@ const Navbar = () => {
             <ul className="nav-list">
               {navLinks.map((link) => {
                 return (
-                  <li key={link.title} className="pb-1 hover:underline">
-                    <Link href={link.href}>{link.title}</Link>
-                  </li>
+                  <NavbarItems
+                    key={link.title}
+                    title={link.title}
+                    href={link.href}
+                    auth={link.auth}
+                  />
                 );
               })}
             </ul>
@@ -92,12 +101,12 @@ const Navbar = () => {
               <FiSearch className="text-[24px] " />
             </Link>
 
-            {isAuth ? (
+            {session && session?.user ? (
               <button
                 className={`toggle-mode-hover flex items-center`}
                 onClick={handleToggleAuth}
               >
-                {`Khin Su Wai`}
+                {session?.user.name}
                 <HiChevronDown />
               </button>
             ) : (
@@ -116,7 +125,7 @@ const Navbar = () => {
         toggleAuth={toggleAuth}
         handleToogleAuth={handleToggleAuth}
       />
-      {toggleAuth && <SignOut />}
+      {toggleAuth && <SignOut closeAuth={closeToggleAuth} />}
       {toggleMode && <ThemeToggle closeTheme={closeToggleMode} />}
     </>
   );

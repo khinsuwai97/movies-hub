@@ -1,7 +1,11 @@
 'use client';
-import { FC, useCallback } from 'react';
+import { FC, useCallback, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import Button from './Button';
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-hot-toast';
+import useLoginModal from '@/hooks/useLoginModal';
+import useRegisterModal from '@/hooks/useRegisterModal';
 
 interface ModalProps {
   isOpen?: boolean;
@@ -12,6 +16,7 @@ interface ModalProps {
   footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
+  isLoading: boolean;
 }
 
 const Modal: FC<ModalProps> = ({
@@ -23,11 +28,35 @@ const Modal: FC<ModalProps> = ({
   footer,
   actionLabel,
   disabled,
+  isLoading,
 }) => {
+  const [googleSignisLoading, setGoogleSignIsLoading] = useState(false);
+  const { onClose: closeRegisterModal } = useRegisterModal();
+  const { onClose: closeLoginModal } = useLoginModal();
+  const handleSubmit = useCallback(() => {
+    if (disabled) {
+      return;
+    }
+    onSubmit();
+  }, [disabled, onSubmit]);
+
   if (!isOpen) {
     return null;
   }
-  console.log(isOpen);
+
+  const signInWithGoogle = async () => {
+    try {
+      setGoogleSignIsLoading(true);
+      await signIn('google');
+      toast.success('Signed in successfully.');
+      closeRegisterModal();
+      closeLoginModal();
+    } catch (error) {
+      toast.error('Error with sign in.Please try again!');
+    } finally {
+      setGoogleSignIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -105,6 +134,8 @@ const Modal: FC<ModalProps> = ({
                 secondary
                 fullWidth
                 large
+                onClick={handleSubmit}
+                isLoading={isLoading}
               />
               <Button
                 disabled={disabled}
@@ -114,6 +145,8 @@ const Modal: FC<ModalProps> = ({
                 large
                 useIcon={true}
                 signIn={true}
+                onClick={signInWithGoogle}
+                isLoading={googleSignisLoading}
               />
               {footer}
             </div>

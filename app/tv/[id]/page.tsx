@@ -12,7 +12,6 @@ interface Params {
 const SeriesOverview = ({ params: { id } }: Params) => {
   const pathName = usePathname();
   const type = pathName.split('/')[1];
-  console.log(type);
 
   return (
     <section id="home" className="md:pt-22 md:pb-[90px] pb-3 pt-6 ">
