@@ -1,13 +1,11 @@
 import '@/styles/globals.css';
-import { Inter } from 'next/font/google';
 import { Rubik } from 'next/font/google';
-import { Open_Sans } from 'next/font/google';
-import { Noto_Sans } from 'next/font/google';
 import Navbar from '@/components/Navbar';
 import Providers from '@/components/Providers';
 import RegisterModal from '@/components/Modal/RegisterModal';
 import LoginModal from '@/components/Modal/LoginModal';
-import BottomMobileMenu from '@/components/BottomMobileMenu';
+import ToasterAlert from '@/components/ToasterAlert';
+
 const inter = Rubik({ subsets: ['latin'] });
 
 export const metadata = {
@@ -24,6 +22,7 @@ export default function RootLayout({
     <html suppressHydrationWarning lang="en">
       <body className={`${inter.className} dark:bg-primaryDark bg-white`}>
         <Providers>
+          <ToasterAlert />
           <LoginModal />
           <RegisterModal />
           <div className="w-full">

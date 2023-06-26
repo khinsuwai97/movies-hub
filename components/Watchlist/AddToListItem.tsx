@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Image from 'next/image';
 import { BsFillBookmarkXFill, BsStarFill } from 'react-icons/bs';
 import { unavailable } from '@/lib/image';
+import { imagePath } from '@/lib/image';
+import useWatchList from '@/hooks/useWatchList';
 
-interface Props {}
+interface AddtoListItemProps {
+  id: number;
+  title: string | undefined;
+  image: string;
+  releaseDate: string;
+  vote: number;
+}
 
-const AddToListItem = ({ title, image, genere, rating, id, date }) => {
+const AddToListItem: FC<AddtoListItemProps> = ({
+  id,
+  title,
+  image,
+  releaseDate,
+  vote,
+}) => {
+  const { removeFromWatchlist } = useWatchList();
   return (
     <div>
       <div className="movie-list-container justify-between">
         <div className="flex items-center gap-4 mb-4">
           <Image
-            src={unavailable}
-            alt={title}
+            src={image ? `${imagePath}${image}` : unavailable}
+            alt={title || 'movies/series photo'}
             width={100}
             height={80}
             className="rounded-md"
@@ -20,19 +35,22 @@ const AddToListItem = ({ title, image, genere, rating, id, date }) => {
 
           <div>
             <p className="sm:text-base text-sm">{title}</p>
-            <p className="sm:text-base text-sm">{date}</p>
+            <p className="sm:text-base text-sm">{releaseDate}</p>
             <p className="flex items-center text-sm sm:text-[16px] gap-1  sm:hidden  ">
               <BsStarFill size={15} className="dark:text-bgBlue text-bgBlue1" />
-              {rating}
+              {vote.toFixed(1)}
             </p>
           </div>
         </div>
         <div className="flex sm:justify-between justify-end items-center">
           <p className="sm:flex items-center text-[16px] gap-1  hidden  ">
             <BsStarFill size={15} className="dark:text-bgBlue text-bgBlue1" />
-            {rating}
+            {vote.toFixed(1)}
           </p>
-          <button className="justify-self-center">
+          <button
+            className="justify-self-center"
+            onClick={() => removeFromWatchlist(id)}
+          >
             <BsFillBookmarkXFill size={22} className="text-red-500" />
           </button>
         </div>

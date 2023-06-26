@@ -2,17 +2,19 @@
 import Link from 'next/link';
 import { AiFillYoutube } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
-export const Button = (props) => {
+
+interface ButtonProps {
+  text: string;
+  section: string;
+}
+export const Button = ({ text, section }: ButtonProps) => {
   return (
-    <Link href={props.section}>
+    <Link href={section}>
       <button
-        className={`${
-          props.cartTotal ? 'w-[100%]' : null
-        } px-[47px] py-[8px]  text-[16px] text-slate-800  dark:text-white outline-none bg-bgBlue1 dark:bg-bgBlue rounded-md font-medium cursor-pointer whitespace-nowrap `}
+        className={` px-[25px] py-[8px]  text-[16px] text-slate-800  dark:text-white outline-none bg-bgBlue1 dark:bg-bgBlue rounded-md font-medium cursor-pointer whitespace-nowrap `}
         type="button"
-        onClick={props.handleClick}
       >
-        {props.text}
+        {text}
       </button>
     </Link>
   );
@@ -39,11 +41,26 @@ export const BackButton = () => {
   const router = useRouter();
   return (
     <button
-      className=" text-sm text-slate-800 dark:text-slate-300 outline-none  dark:border-slate-500 border-b-2  hover:border-gray-400 dark:hover:text-white 
+      className=" text-sm text-slate-800 dark:text-slate-300 outline-none  dark:hover:text-white 
       "
       onClick={() => router.back()}
     >
       Back to previous page
+    </button>
+  );
+};
+
+interface BacktoHomeButtonProps {
+  detail?: boolean;
+}
+export const BacktoHomeButton = ({ detail }: BacktoHomeButtonProps) => {
+  return (
+    <button
+      className={`${
+        detail ? '' : 'sm:text-[16px]'
+      }text-sm text-slate-800 dark:text-slate-200 outline-none    dark:hover:text-white`}
+    >
+      <Link href="/">{detail ? 'Home' : 'Back to Home'}</Link>
     </button>
   );
 };

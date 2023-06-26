@@ -31,24 +31,19 @@ const DetailPage: FC<DetailPageProps> = ({ movieId, type }) => {
     return <DeatailLoading />;
   }
   if (videoError) {
-    return <Error message={error.message} />;
+    return <Error message={videoError.message} />;
   } else if (videoIsLoading) {
     return <DeatailLoading />;
   }
   if (castError) {
-    return <Error message={error.message} />;
+    return <Error message={castError.message} />;
   } else if (castIsLoading) {
     return <DeatailLoading />;
   }
 
-  if (!data) {
+  if (!data || !youtubeVideo || !casts) {
     return;
   }
-  if (!youtubeVideo) {
-    return;
-  }
-
-  if (!casts) return;
 
   return (
     <>

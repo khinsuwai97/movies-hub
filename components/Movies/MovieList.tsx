@@ -1,5 +1,6 @@
 'use client';
-import React, { FC } from 'react';
+
+import React, { FC, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { unavailable } from '@/lib/image';
@@ -12,6 +13,9 @@ import {
 import useRegisterModal from '@/hooks/useRegisterModal';
 import CustomPagination from '../Pagination/CustomPagination';
 import { imagePath } from '@/lib/image';
+import useWatchList from '@/hooks/useWatchList';
+import { errorToast, successTaost } from '@/lib/showToast';
+
 export interface MovieListProps {
   id: number;
   title: string | undefined;
@@ -32,6 +36,7 @@ const MovieList: FC<MovieListProps> = ({
   type,
 }) => {
   const { onOpen } = useRegisterModal();
+  const { watchlists, addToWatchlist } = useWatchList();
   const router = useRouter();
 
   const handleOpenRegister = (e: any) => {
@@ -60,6 +65,26 @@ const MovieList: FC<MovieListProps> = ({
       <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
     );
   }
+
+  const handleAddToWatchList = useCallback(
+    (e: any) => {
+      e.stopPropagation();
+      const checkItemInCart = watchlists.find((item) => item.id === id);
+      if (checkItemInCart) {
+        errorToast(title);
+        return;
+      }
+      addToWatchlist({
+        id,
+        title,
+        image,
+        releaseDate,
+        vote,
+      });
+      successTaost(title);
+    },
+    [id, title, image, releaseDate, vote, addToWatchlist, watchlists]
+  );
 
   return (
     <div
@@ -92,7 +117,7 @@ const MovieList: FC<MovieListProps> = ({
           {Number(vote.toFixed(1))}
         </span>
       </div>
-      <span onClick={handleOpenRegister}>
+      <span onClick={handleAddToWatchList}>
         <BsBookmarkFill className="text-[22px] absolute text-cyan-700 left-1  top-3 cursor-pointer z-20 " />
       </span>
     </div>
@@ -100,3 +125,4 @@ const MovieList: FC<MovieListProps> = ({
 };
 
 export default MovieList;
+// onClick={handleOpenRegister}

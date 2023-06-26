@@ -1,12 +1,14 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import Image from 'next/image';
 import { unavailable } from '@/lib/image';
 import ImageCarousel from './ImageCarousel';
-import { BackButton, TrailerButton } from '../LinkButton';
+import { BackButton, TrailerButton, BacktoHomeButton } from '../LinkButton';
 import { BsBookmarkFill } from 'react-icons/bs';
 import { BiRightArrow } from 'react-icons/bi';
 import { CastsResponse, DetailResponse, YoutubeVideoResponse } from '@/types';
+
 import { img_500 } from '@/lib/image';
+import useWatchList from '@/hooks/useWatchList';
 
 interface MovieDeatailProps {
   detail: DetailResponse;
@@ -16,7 +18,31 @@ interface MovieDeatailProps {
 
 const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
   const genre = detail.genres.map((g) => g.name).join(',');
-  const video = videos?.results.map((v) => v.key);
+  const video = videos?.results?.map((v) => v.key);
+  const { watchlists, addToWatchlist } = useWatchList();
+  const handleAddToWatchList = useCallback(() => {
+    const checkItemInCart = watchlists.find((item) => item.id === detail.id);
+    if (checkItemInCart) {
+      return;
+    }
+    addToWatchlist({
+      id: detail.id,
+      title: detail.title || detail.name,
+      image: detail.poster_path,
+      releaseDate: detail.release_date || detail.seasons[0].air_date,
+      vote: detail.vote_average,
+    });
+  }, [
+    detail.id,
+    detail.title,
+    detail.release_date,
+    detail.vote_average,
+    detail.name,
+    detail.seasons,
+    detail.poster_path,
+    addToWatchlist,
+    watchlists,
+  ]);
 
   return (
     <>
@@ -49,6 +75,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
           <div className="flex gap-4 items-center mb-2">
             <div
               className={`w-[30px] h-[30px] rounded-full flex justify-center items-center  cursor-pointer bg-slate-200  dark:bg-gray-600   z-20`}
+              onClick={handleAddToWatchList}
             >
               <BsBookmarkFill size={15} />
             </div>
@@ -69,6 +96,8 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
             <ImageCarousel castsData={castsData} />
           </div>
           <div className=" md:flex justify-center items-center hidden">
+            <BacktoHomeButton detail={true} />
+            <span className="text-slate-400 m-3"> / </span>
             <BackButton />
           </div>
         </div>
@@ -77,6 +106,8 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
         <ImageCarousel castsData={castsData} />
       </div>
       <div className=" md:hidden flex justify-center items-center mb-[90px] ">
+        <BacktoHomeButton detail={true} />
+        <span className="text-slate-400 m-3"> / </span>
         <BackButton />
       </div>
     </>

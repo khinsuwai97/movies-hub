@@ -5,7 +5,7 @@ import Genre from '../Genre/Genre';
 import useCategoriesToggleMovies from '@/hooks/useCategoriesToggleMovies';
 import useGenres from '@/hooks/useGenres';
 import Error from '../Error';
-import GenreLoading from '../Watchlist/GenreLoading';
+import GenreLoading from '../GenreLoading';
 import useMovies from '@/hooks/useMovies';
 import CustomPagination from '../Pagination/CustomPagination';
 import MovieCard from '../Movies/MovieCard';

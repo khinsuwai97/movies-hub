@@ -1,32 +1,31 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import AddToListItem from './AddToListItem';
-// import { movies } from '@/mockdata/photos/data';
+import { movies } from '@/mockdata/photos/data';
 // import { ActionButton } from '../LinkButton';
 import Button from '../Button';
+import useWatchList from '@/hooks/useWatchList';
 
-interface Props {}
-
-const AddtoList = (props: Props) => {
+const AddtoList = () => {
+  const { watchlists, clearWatchlist } = useWatchList();
   return (
-    <p>watchlis</p>
-    // <>
-    //   {movies.map((movie) => {
-    //     return (
-    //       <AddToListItem
-    //         key={movie.id}
-    //         id={movie.id}
-    //         title={movie.title}
-    //         image={movie.image}
-    //         genere={movie.genere}
-    //         date={movie.date}
-    //         rating={movie.rating}
-    //       />
-    //     );
-    //   })}
-    //   <div className="flex justify-end mb-[90px]">
-    //     <Button label="Clear List" />
-    //   </div>
-    // </>
+    <>
+      {watchlists.map((item) => {
+        return (
+          <AddToListItem
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            image={item.image}
+            releaseDate={item.releaseDate}
+            vote={item.vote}
+          />
+        );
+      })}
+      <div className="flex justify-end mb-[90px]">
+        <Button label="Clear List" onClick={clearWatchlist} />
+      </div>
+    </>
   );
 };
 
