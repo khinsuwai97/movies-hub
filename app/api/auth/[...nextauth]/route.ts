@@ -45,11 +45,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  pages: {
-    signIn: '/watchlist',
-    signOut: '/',
-  },
-
   callbacks: {
     async session({ token, session }) {
       if (token) {
@@ -58,6 +53,9 @@ export const authOptions: NextAuthOptions = {
         session.user.email = token.email;
       }
       return session;
+    },
+    redirect() {
+      return '/';
     },
   },
 

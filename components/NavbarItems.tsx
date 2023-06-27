@@ -13,6 +13,7 @@ const NavbarItems: FC<NavbarItemsProps> = ({ title, href, auth }) => {
   const { data: session } = useSession();
   const router = useRouter();
   const { onOpen } = useRegisterModal();
+
   const handleNavigation = () => {
     if (auth && !session?.user) {
       onOpen();

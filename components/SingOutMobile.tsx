@@ -1,19 +1,22 @@
 'use client';
-import React from 'react';
+import React, { FC } from 'react';
 import { BsFillPersonDashFill } from 'react-icons/bs';
 import { signOut } from 'next-auth/react';
-import { useRouter, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
-interface Props {}
+interface SignOutMobileProps {
+  closeAuth: () => void;
+}
 
-const SingOutMobile = (props: Props) => {
-  const router = useRouter();
+const SignOutMobile: FC<SignOutMobileProps> = ({ closeAuth }) => {
   return (
     <div className="theme-toggle-signout-mobile">
       <button
         className="flex justify-center items-center gap-2 cursor-pointer text-sm "
         onClick={() => {
           signOut();
+          closeAuth();
+          redirect('/');
         }}
       >
         <BsFillPersonDashFill className="text-[20px]" />
@@ -23,4 +26,4 @@ const SingOutMobile = (props: Props) => {
   );
 };
 
-export default SingOutMobile;
+export default SignOutMobile;

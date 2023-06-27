@@ -13,7 +13,7 @@ interface ButtonProps {
   useIcon?: boolean;
   action?: boolean;
   signIn?: boolean;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 const Button: FC<ButtonProps> = ({

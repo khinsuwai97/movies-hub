@@ -14,6 +14,7 @@ import useLoginModal from '@/hooks/useLoginModal';
 import SignOut from './SignOut';
 import { useSession } from 'next-auth/react';
 import NavbarItems from './NavbarItems';
+import useGetWatchlist from '@/hooks/useGetWatchlist';
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -23,10 +24,13 @@ const Navbar = () => {
   const [toggleAuth, setToggleAuth] = useState(false);
   const { theme } = useTheme();
   const { onOpen } = useLoginModal();
-
+  //  console.log(session?.user.id);
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const { data } = useGetWatchlist(session?.user.id);
+  console.log(data);
 
   const renderTheme = () => {
     if (!mounted) return null;
@@ -124,6 +128,7 @@ const Navbar = () => {
         toggleMode={toggleMode}
         toggleAuth={toggleAuth}
         handleToogleAuth={handleToggleAuth}
+        closeAuth={closeToggleAuth}
       />
       {toggleAuth && <SignOut closeAuth={closeToggleAuth} />}
       {toggleMode && <ThemeToggle closeTheme={closeToggleMode} />}

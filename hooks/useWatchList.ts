@@ -1,7 +1,10 @@
 import { create } from 'zustand';
+import useSWR from 'swr';
+import fetcher from '@/lib/fetcher';
 
 export interface MovieData {
-  id: number;
+  id: string;
+  userId: string | undefined;
   title: string | undefined;
   image: string;
   releaseDate: string;
@@ -10,6 +13,7 @@ export interface MovieData {
 
 interface WatchListStore {
   watchlists: MovieData[];
+  setWatchlists: (data: MovieData[]) => void;
   addToWatchlist: (items: MovieData) => void;
   removeFromWatchlist: (id: number) => void;
   clearWatchlist: () => void;
@@ -17,11 +21,12 @@ interface WatchListStore {
 
 const useWatchList = create<WatchListStore>((set) => ({
   watchlists: [],
+  setWatchlists: (data: MovieData[]) => set({ watchlists: data }),
   addToWatchlist: (items) =>
     set((state) => ({ watchlists: [...state.watchlists, items] })),
   removeFromWatchlist: (id) =>
     set((state) => ({
-      watchlists: state.watchlists.filter((item) => item.id !== id),
+      watchlists: state.watchlists.filter((item) => item.movieId !== id),
     })),
   clearWatchlist: () => set({ watchlists: [] }),
 }));

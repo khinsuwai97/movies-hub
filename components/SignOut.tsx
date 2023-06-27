@@ -2,7 +2,6 @@ import React, { FC } from 'react';
 import { useRouter, redirect } from 'next/navigation';
 import { BsFillPersonDashFill } from 'react-icons/bs';
 import { signOut, useSession } from 'next-auth/react';
-import { Session } from 'inspector';
 
 type SignOutProps = {
   closeAuth: () => void;
@@ -15,6 +14,7 @@ const SignOut: FC<SignOutProps> = ({ closeAuth }) => {
     await signOut();
     closeAuth();
   };
+
   return (
     <div className="theme-toggle-signout">
       {session?.user && (

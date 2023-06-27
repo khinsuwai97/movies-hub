@@ -6,7 +6,6 @@ import Error from '../Error';
 import Loading from '../Loading';
 import MovieCard from '../Movies/MovieCard';
 import CustomPagination from '../Pagination/CustomPagination';
-import useDebounce from '@/hooks/useDebounce';
 
 const SearchPage = () => {
   const [selectedType, setSelectedType] = useState('movie');
@@ -29,7 +28,6 @@ const SearchPage = () => {
   }, [page, data]);
 
   let content;
-  if (!data) return;
 
   if (error) {
     content = <Error message={error.message} />;
@@ -39,10 +37,9 @@ const SearchPage = () => {
     } else if (query && (!data?.results || data?.results.length === 0)) {
       content = resultError;
     } else {
-      content = <MovieCard movies={data?.results} type={selectedType} />;
+      content = <MovieCard movies={data?.results!} type={selectedType} />;
     }
   }
-
   return (
     <>
       <SearchFeature
@@ -51,11 +48,12 @@ const SearchPage = () => {
         setQuery={setQuery}
       />
       {content}
-      {data?.results && data?.results.length > 1 && (
+
+      {data?.results && data.results.length > 0 && (
         <CustomPagination
           page={page}
           setPage={setPage}
-          totalPages={data?.total_pages}
+          totalPages={data?.total_pages!}
         />
       )}
     </>

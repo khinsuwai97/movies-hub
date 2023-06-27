@@ -25,16 +25,16 @@ const LoginModal = (props: Props) => {
         password,
       });
 
-      router.push('/watchlist');
       closeLoginModal();
       toast.success('Signed in successfully.');
+      redirect('/watchlist');
     } catch (error) {
       console.log(error);
       toast.error('Error with sign in.Please try again!');
     } finally {
       setIsLoading(false);
     }
-  }, [closeLoginModal, email, password, router]);
+  }, [closeLoginModal, email, password]);
 
   const toggleModal = () => {
     if (isLoading) {

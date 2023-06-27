@@ -1,12 +1,17 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Image from 'next/image';
 import { BsFillBookmarkXFill, BsStarFill } from 'react-icons/bs';
 import { unavailable } from '@/lib/image';
 import { imagePath } from '@/lib/image';
 import useWatchList from '@/hooks/useWatchList';
+import useGetWatchlist from '@/hooks/useGetWatchlist';
+import { useSession } from 'next-auth/react';
+import useDeleteWatchlist from '@/hooks/useDeleteWatchlist';
+import { errorToast, successTaost } from '@/lib/showToast';
+import axios from 'axios';
 
 interface AddtoListItemProps {
-  id: number;
+  id: string;
   title: string | undefined;
   image: string;
   releaseDate: string;
@@ -20,7 +25,21 @@ const AddToListItem: FC<AddtoListItemProps> = ({
   releaseDate,
   vote,
 }) => {
-  const { removeFromWatchlist } = useWatchList();
+  // const { removeFromWatchlist } = useWatchList();
+  console.log(id);
+  const { mutate } = useDeleteWatchlist(id);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const deleteWatchlist = async () => {
+    try {
+      await axios.delete(`/api/delete/${id}`);
+      mutate();
+      successTaost(title, 'is removed from your watchlist.');
+    } catch (error) {
+      errorToast(title, `cannot be removed because of ${error} .`);
+    }
+  };
+
   return (
     <div>
       <div className="movie-list-container justify-between">
@@ -47,10 +66,7 @@ const AddToListItem: FC<AddtoListItemProps> = ({
             <BsStarFill size={15} className="dark:text-bgBlue text-bgBlue1" />
             {vote.toFixed(1)}
           </p>
-          <button
-            className="justify-self-center"
-            onClick={() => removeFromWatchlist(id)}
-          >
+          <button className="justify-self-center">
             <BsFillBookmarkXFill size={22} className="text-red-500" />
           </button>
         </div>
@@ -61,3 +77,4 @@ const AddToListItem: FC<AddtoListItemProps> = ({
 };
 
 export default AddToListItem;
+// onClick={deleteWatchlist}

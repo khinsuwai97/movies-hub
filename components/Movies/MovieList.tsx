@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { unavailable } from '@/lib/image';
@@ -8,6 +8,7 @@ import {
   BsBookmarkCheck,
   BsBookmarkCheckFill,
   BsBookmarkFill,
+  BsFillBookmarkCheckFill,
   BsFillBookmarkPlusFill,
 } from 'react-icons/bs';
 import useRegisterModal from '@/hooks/useRegisterModal';
@@ -15,6 +16,10 @@ import CustomPagination from '../Pagination/CustomPagination';
 import { imagePath } from '@/lib/image';
 import useWatchList from '@/hooks/useWatchList';
 import { errorToast, successTaost } from '@/lib/showToast';
+import { useSession } from 'next-auth/react';
+import axios from 'axios';
+import useGetWatchlist from '@/hooks/useGetWatchlist';
+import Error from '../Error';
 
 export interface MovieListProps {
   id: number;
@@ -36,13 +41,16 @@ const MovieList: FC<MovieListProps> = ({
   type,
 }) => {
   const { onOpen } = useRegisterModal();
-  const { watchlists, addToWatchlist } = useWatchList();
-  const router = useRouter();
+  const { watchlists, setWatchlists } = useWatchList();
+  const { data: session } = useSession();
+  const { data, error, isLoading, mutate } = useGetWatchlist(session?.user.id);
 
-  const handleOpenRegister = (e: any) => {
-    e.stopPropagation();
-    onOpen();
-  };
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    setWatchlists(data!);
+  }, [setWatchlists, data]);
 
   const goToDetailPage = (e: any) => {
     e.stopPropagation();
@@ -65,26 +73,61 @@ const MovieList: FC<MovieListProps> = ({
       <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
     );
   }
-
   const handleAddToWatchList = useCallback(
-    (e: any) => {
+    async (e: any) => {
+      try {
+        await axios.post('/api/watchlist/create', {
+          title,
+          image,
+          releaseDate,
+          vote: vote.toString(),
+          userId: session?.user.id,
+        });
+        mutate();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
+      }
+      successTaost(title, 'was added to your watchlist.');
+    },
+    [title, image, releaseDate, vote, session?.user.id, mutate]
+  );
+
+  const checkItemInCart = useMemo(() => {
+    return data?.find((item) => item.userId === session?.user.id);
+  }, [data, session?.user.id]);
+
+  if (error) {
+    return <Error message={error} />;
+  }
+
+  console.log(checkItemInCart);
+
+  const handleWatchList = (e: any) => {
+    if (!session?.user) {
       e.stopPropagation();
-      const checkItemInCart = watchlists.find((item) => item.id === id);
+      onOpen();
+    } else {
+      e.stopPropagation();
+
       if (checkItemInCart) {
-        errorToast(title);
+        errorToast(title, 'is already in your watchlist');
         return;
       }
-      addToWatchlist({
-        id,
-        title,
-        image,
-        releaseDate,
-        vote,
-      });
-      successTaost(title);
-    },
-    [id, title, image, releaseDate, vote, addToWatchlist, watchlists]
-  );
+      handleAddToWatchList(e);
+    }
+  };
+  let watchlistBookmark;
+  if (checkItemInCart) {
+    watchlistBookmark = (
+      <BsFillBookmarkCheckFill className="text-[22px] absolute text-pink-700 left-1  top-3 cursor-pointer z-20 " />
+    );
+  } else {
+    watchlistBookmark = (
+      <BsBookmarkFill className="text-[22px] absolute text-cyan-700 left-1  top-3 cursor-pointer z-20 " />
+    );
+  }
 
   return (
     <div
@@ -117,9 +160,7 @@ const MovieList: FC<MovieListProps> = ({
           {Number(vote.toFixed(1))}
         </span>
       </div>
-      <span onClick={handleAddToWatchList}>
-        <BsBookmarkFill className="text-[22px] absolute text-cyan-700 left-1  top-3 cursor-pointer z-20 " />
-      </span>
+      <span onClick={handleWatchList}>{watchlistBookmark}</span>
     </div>
   );
 };

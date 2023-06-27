@@ -6,8 +6,7 @@ import { FiSearch } from 'react-icons/fi';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Link from 'next/link';
 import ThemeToggleMobile from './ThemeToggleMobile';
-import SingOutMobile from './SingOutMobile';
-import useCurrentUser from '@/hooks/useCurrentUser';
+import SignOutMobile from './SingOutMobile';
 import { useSession } from 'next-auth/react';
 
 interface BottomMobileMenuProps {
@@ -17,6 +16,7 @@ interface BottomMobileMenuProps {
   toggleMode: boolean;
   toggleAuth: boolean;
   handleToogleAuth: () => void;
+  closeAuth: () => void;
 }
 
 const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
@@ -26,6 +26,7 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
   toggleMode,
   toggleAuth,
   handleToogleAuth,
+  closeAuth,
 }) => {
   const { data: session } = useSession();
 
@@ -60,7 +61,7 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
           )}
 
           {toggleMode && <ThemeToggleMobile closeTheme={closeTheme} />}
-          {toggleAuth && <SingOutMobile />}
+          {toggleAuth && <SignOutMobile closeAuth={closeAuth} />}
         </div>
       </nav>
     </>

@@ -40,12 +40,13 @@ const RegisterModal = () => {
         email,
         password,
       });
+      router.push('/watchlist');
     } catch {
       toast.error('Something went wrong!');
     } finally {
       setIsLoading(false);
     }
-  }, [name, email, password, closeRegisterModal]);
+  }, [name, email, password, closeRegisterModal, router]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
