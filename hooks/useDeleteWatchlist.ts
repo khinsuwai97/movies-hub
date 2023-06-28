@@ -1,9 +1,8 @@
 import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
 
-const useDeleteWatchlist = (id: string) => {
-  // const url = !userId ? `api/posts` : `api/posts/${userId}`;
-  const url = id ? `/api/delete/${id}` : null;
+const useDeleteWatchlist = () => {
+  const url = `/api/watchlist`;
   const { data, error, isLoading, mutate } = useSWR(url, fetcher);
   return {
     data,

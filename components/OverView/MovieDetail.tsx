@@ -6,10 +6,12 @@ import { BackButton, TrailerButton, BacktoHomeButton } from '../LinkButton';
 import { BsBookmarkFill } from 'react-icons/bs';
 import { BiRightArrow } from 'react-icons/bi';
 import { CastsResponse, DetailResponse, YoutubeVideoResponse } from '@/types';
-
 import { img_500 } from '@/lib/image';
-import useWatchList from '@/hooks/useWatchList';
 import { successTaost, errorToast } from '@/lib/showToast';
+import axios from 'axios';
+import { useSession } from 'next-auth/react';
+import useGetWatchlist from '@/hooks/useGetWatchlist';
+import Error from '../Error';
 
 interface MovieDeatailProps {
   detail: DetailResponse;
@@ -20,32 +22,50 @@ interface MovieDeatailProps {
 const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
   const genre = detail.genres.map((g) => g.name).join(',');
   const video = videos?.results?.map((v) => v.key);
-  const { watchlists, addToWatchlist } = useWatchList();
-  const handleAddToWatchList = useCallback(() => {
-    const checkItemInCart = watchlists.find((item) => item.id === detail.id);
-    if (checkItemInCart) {
-      errorToast(detail.title || detail.name);
-      return;
-    }
-    addToWatchlist({
-      id: detail.id,
-      title: detail.title || detail.name,
-      image: detail.poster_path,
-      releaseDate: detail.release_date || detail.seasons[0].air_date,
-      vote: detail.vote_average,
-    });
-    successTaost(detail.title || detail.name);
-  }, [
-    detail.id,
-    detail.title,
-    detail.release_date,
-    detail.vote_average,
-    detail.name,
-    detail.seasons,
-    detail.poster_path,
-    addToWatchlist,
-    watchlists,
-  ]);
+  const { data: session } = useSession();
+  const { data, error, isLoading, mutate } = useGetWatchlist();
+
+  const handleAddToWatchList = useCallback(
+    async (e: any) => {
+      const checkItemInCart = data?.find(
+        (item) => item.movieId === detail.id.toString()
+      );
+      if (checkItemInCart) {
+        errorToast(detail.title || detail.name, 'is already in your watchlist');
+        return;
+      }
+      try {
+        await axios.post('/api/watchlist/create', {
+          title: detail.title || detail.name,
+          image: detail.poster_path,
+          releaseDate: detail.release_date || detail.seasons[0].air_date,
+          movieId: detail.id.toString(),
+          vote: detail.vote_average.toString(),
+          userId: session?.user.id,
+        });
+        mutate();
+      } catch (error) {
+        console.log(error);
+      }
+      successTaost(detail.title || detail.name, 'was added to your watchlist.');
+    },
+    [
+      detail.id,
+      detail.name,
+      detail.poster_path,
+      detail.release_date,
+      detail.seasons,
+      detail.title,
+      detail.vote_average,
+      mutate,
+      session?.user.id,
+      data,
+    ]
+  );
+
+  if (error) {
+    return <Error message={error} />;
+  }
 
   return (
     <>

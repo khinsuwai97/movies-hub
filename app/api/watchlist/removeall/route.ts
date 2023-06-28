@@ -3,34 +3,25 @@ import prisma from '@/lib/prismadb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/route';
 
-interface MovieIdParams {
-  params: {
-    id: string;
-  };
-}
-
-export const DELETE = async (
-  req: Request,
-  { params: { id } }: MovieIdParams
-) => {
+export const DELETE = async (req: Request, res: Response) => {
   const currentUser = await getServerSession(authOptions);
+  const userId = currentUser?.user.id;
+
   try {
-    if (!id && typeof id !== 'string') {
+    if (!userId && typeof userId !== 'string') {
       throw new Error('Invalid User Id');
     }
 
-    const movies = await prisma.movie.findMany({
+    const movies = await prisma.movie.deleteMany({
       where: {
-        id,
-        userId: currentUser?.user.id,
+        userId,
       },
     });
-
-    console.log(movies);
 
     return NextResponse.json(movies, { status: 200 });
   } catch (error) {
     console.log(error);
-    return NextResponse.json('Error with fetching movies', { status: 400 });
+
+    return NextResponse.json('Error with deleting movies', { status: 400 });
   }
 };

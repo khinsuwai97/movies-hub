@@ -1,16 +1,11 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prismadb';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../../auth/[...nextauth]/route';
 
-interface UserIdParams {
-  params: {
-    userId: string;
-  };
-}
-
-export const GET = async (
-  req: Request,
-  { params: { userId } }: UserIdParams
-) => {
+export const GET = async (req: Request) => {
+  const currentUser = await getServerSession(authOptions);
+  const userId = currentUser?.user.id;
   try {
     if (!userId && typeof userId !== 'string') {
       throw new Error('Invalid User Id');
@@ -21,8 +16,6 @@ export const GET = async (
         userId,
       },
     });
-
-    console.log(movies);
 
     return NextResponse.json(movies, { status: 200 });
   } catch (error) {

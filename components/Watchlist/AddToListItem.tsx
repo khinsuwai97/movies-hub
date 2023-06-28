@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import useDeleteWatchlist from '@/hooks/useDeleteWatchlist';
 import { errorToast, successTaost } from '@/lib/showToast';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 
 interface AddtoListItemProps {
   id: string;
@@ -26,15 +27,16 @@ const AddToListItem: FC<AddtoListItemProps> = ({
   vote,
 }) => {
   // const { removeFromWatchlist } = useWatchList();
-  console.log(id);
-  const { mutate } = useDeleteWatchlist(id);
-  const [isDeleting, setIsDeleting] = useState(false);
+
+  // const { mutate, data } = useDeleteWatchlist();
+  // const [isDeleting, setIsDeleting] = useState(false);
+  const { mutate } = useGetWatchlist();
 
   const deleteWatchlist = async () => {
     try {
-      await axios.delete(`/api/delete/${id}`);
-      mutate();
+      await axios.delete(`/api/watchlist/remove?id=${id}`);
       successTaost(title, 'is removed from your watchlist.');
+      mutate();
     } catch (error) {
       errorToast(title, `cannot be removed because of ${error} .`);
     }
@@ -67,7 +69,11 @@ const AddToListItem: FC<AddtoListItemProps> = ({
             {vote.toFixed(1)}
           </p>
           <button className="justify-self-center">
-            <BsFillBookmarkXFill size={22} className="text-red-500" />
+            <BsFillBookmarkXFill
+              size={22}
+              className="text-red-500"
+              onClick={deleteWatchlist}
+            />
           </button>
         </div>
       </div>
@@ -77,4 +83,3 @@ const AddToListItem: FC<AddtoListItemProps> = ({
 };
 
 export default AddToListItem;
-// onClick={deleteWatchlist}

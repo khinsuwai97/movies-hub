@@ -2,7 +2,6 @@
 import React from 'react';
 import DetailPage from '@/components/MoviesPage/DetailPage';
 import { usePathname } from 'next/navigation';
-import { BackButton, BacktoHomeButton } from '@/components/LinkButton';
 
 interface Params {
   params: {

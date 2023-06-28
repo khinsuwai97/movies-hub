@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, FormEvent } from 'react';
 import Input from '../Input';
 import Modal from '../Modal';
 import useRegisterModal from '@/hooks/useRegisterModal';
@@ -8,14 +8,25 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import useFormValidation from '@/hooks/useFormValidation';
 
 const RegisterModal = () => {
-  const { isOpen, onClose: closeRegisterModal, onOpen } = useRegisterModal();
+  const { isOpen, onClose: closeRegisterModal } = useRegisterModal();
   const { onOpen: openLoginModal } = useLoginModal();
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [validForm, setValidForm] = useState({
+    name: true,
+    password: true,
+    email: true,
+  });
+  const { nameIsValid, emailIsValid, passwordIsVaid } = useFormValidation(
+    name,
+    email,
+    password
+  );
   const router = useRouter();
 
   const toggleModal = () => {
@@ -26,8 +37,24 @@ const RegisterModal = () => {
     openLoginModal();
   };
 
+  // const onFormSubmit = (e: FormEvent) => {
+  //   e.preventDefault();
+  //
+
   const onSumbit = useCallback(async () => {
+    const formisValid = nameIsValid && emailIsValid && passwordIsVaid;
+    setValidForm({
+      name: nameIsValid,
+      email: emailIsValid,
+      password: passwordIsVaid,
+    });
+
+    if (!formisValid) {
+      return;
+    }
+
     setIsLoading(true);
+
     try {
       await axios.post('/api/register', {
         name,
@@ -46,7 +73,20 @@ const RegisterModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [name, email, password, closeRegisterModal, router]);
+
+    setName('');
+    setEmail('');
+    setPassword('');
+  }, [
+    name,
+    email,
+    password,
+    closeRegisterModal,
+    router,
+    nameIsValid,
+    emailIsValid,
+    passwordIsVaid,
+  ]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -56,12 +96,18 @@ const RegisterModal = () => {
         disabled={isLoading}
         value={name}
       />
+      {!validForm.name && (
+        <p className="invalid-form-text">Please enter a valid name.</p>
+      )}
       <Input
         placeholder="Email"
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
         value={email}
       />
+      {!validForm.email && (
+        <p className="invalid-form-text">Please enter a valid email.</p>
+      )}
       <Input
         placeholder="Password"
         type="password"
@@ -69,6 +115,9 @@ const RegisterModal = () => {
         disabled={isLoading}
         value={password}
       />
+      {!validForm.password && (
+        <p className="invalid-form-text">Password must be 5 characters long.</p>
+      )}
     </div>
   );
   const footerContent = (

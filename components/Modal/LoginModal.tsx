@@ -7,17 +7,35 @@ import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
-interface Props {}
+import useFormValidation from '@/hooks/useFormValidation';
 
-const LoginModal = (props: Props) => {
+const LoginModal = () => {
   const { isOpen, onOpen, onClose: closeLoginModal } = useLoginModal();
   const { onOpen: openRegisterModal } = useRegisterModal();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const [validForm, setValidForm] = useState({
+    email: true,
+    password: true,
+  });
+  const { emailIsValid, passwordIsVaid } = useFormValidation(
+    '',
+    email,
+    password
+  );
 
   const onSubmit = useCallback(async () => {
+    const formisValid = emailIsValid && passwordIsVaid;
+    setValidForm({
+      email: emailIsValid,
+      password: passwordIsVaid,
+    });
+
+    if (!formisValid) {
+      return;
+    }
     try {
       setIsLoading(true);
       await signIn('credentials', {
@@ -34,7 +52,9 @@ const LoginModal = (props: Props) => {
     } finally {
       setIsLoading(false);
     }
-  }, [closeLoginModal, email, password]);
+    setEmail('');
+    setPassword('');
+  }, [closeLoginModal, email, password, emailIsValid, passwordIsVaid]);
 
   const toggleModal = () => {
     if (isLoading) {
@@ -52,6 +72,9 @@ const LoginModal = (props: Props) => {
         onChange={(e) => setEmail(e.target.value)}
         disabled={isLoading}
       />
+      {!validForm.email && (
+        <p className="invalid-form-text">Please enter a valid email.</p>
+      )}
       <Input
         placeholder="Password"
         type="password"
@@ -59,6 +82,9 @@ const LoginModal = (props: Props) => {
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoading}
       />
+      {!validForm.password && (
+        <p className="invalid-form-text">Please enter a valid password.</p>
+      )}
     </div>
   );
   const footerContent = (

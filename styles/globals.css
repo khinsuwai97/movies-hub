@@ -101,3 +101,7 @@
     transform: rotate(360deg);
   }
 }
+
+.invalid-form-text {
+  @apply text-base text-red-700;
+}
