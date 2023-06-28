@@ -1,15 +1,11 @@
-import React, { FC, useState } from 'react';
+import { FC } from 'react';
+import axios from 'axios';
 import Image from 'next/image';
 import { BsFillBookmarkXFill, BsStarFill } from 'react-icons/bs';
 import { unavailable } from '@/lib/image';
 import { imagePath } from '@/lib/image';
-import useWatchList from '@/hooks/useWatchList';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
-import { useSession } from 'next-auth/react';
-import useDeleteWatchlist from '@/hooks/useDeleteWatchlist';
 import { errorToast, successTaost } from '@/lib/showToast';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
 
 interface AddtoListItemProps {
   id: string;
@@ -26,10 +22,6 @@ const AddToListItem: FC<AddtoListItemProps> = ({
   releaseDate,
   vote,
 }) => {
-  // const { removeFromWatchlist } = useWatchList();
-
-  // const { mutate, data } = useDeleteWatchlist();
-  // const [isDeleting, setIsDeleting] = useState(false);
   const { mutate } = useGetWatchlist();
 
   const deleteWatchlist = async () => {

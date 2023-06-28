@@ -1,10 +1,10 @@
 'use client';
-import { FC, useCallback, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { AiOutlineClose } from 'react-icons/ai';
-import Button from './Button';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
+import { AiOutlineClose } from 'react-icons/ai';
+import Button from './Button';
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
 

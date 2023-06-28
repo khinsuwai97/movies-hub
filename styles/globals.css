@@ -70,6 +70,11 @@
   grid-template-columns: 2fr 1fr;
 }
 
+/* Watchlist Icon */
+.watchlist-icon {
+  @apply text-[22px] absolute left-1  top-3 cursor-pointer z-20;
+}
+
 .item-border {
   border-bottom: 0.5px;
   border-color: #1e2125;

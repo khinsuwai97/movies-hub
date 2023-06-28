@@ -1,21 +1,21 @@
 'use client';
 import { useState, useCallback } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { redirect } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+import { toast } from 'react-hot-toast';
 import Modal from '../Modal';
 import Input from '../Input';
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
-import { signIn } from 'next-auth/react';
-import { toast } from 'react-hot-toast';
 import useFormValidation from '@/hooks/useFormValidation';
 
 const LoginModal = () => {
-  const { isOpen, onOpen, onClose: closeLoginModal } = useLoginModal();
+  const { isOpen, onClose: closeLoginModal } = useLoginModal();
   const { onOpen: openRegisterModal } = useRegisterModal();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+
   const [validForm, setValidForm] = useState({
     email: true,
     password: true,
@@ -42,7 +42,6 @@ const LoginModal = () => {
         email,
         password,
       });
-
       closeLoginModal();
       toast.success('Signed in successfully.');
       redirect('/watchlist');

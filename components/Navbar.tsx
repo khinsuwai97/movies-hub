@@ -1,20 +1,19 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useTheme } from 'next-themes';
+import { useSession } from 'next-auth/react';
 import { FiSearch } from 'react-icons/fi';
 import { MdOutlineDarkMode, MdOutlineWbSunny } from 'react-icons/md';
-import Link from 'next/link';
-import { BsFillPersonDashFill, BsFillPersonPlusFill } from 'react-icons/bs';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 import { HiChevronDown } from 'react-icons/hi';
 import { navLinks } from '@/data';
 import MobileMenu from './MobileMenu';
 import BottomMobileMenu from './BottomMobileMenu';
 import ThemeToggle from './ThemeToggle';
-import { useTheme } from 'next-themes';
 import useLoginModal from '@/hooks/useLoginModal';
 import SignOut from './SignOut';
-import { useSession } from 'next-auth/react';
 import NavbarItems from './NavbarItems';
-import useGetWatchlist from '@/hooks/useGetWatchlist';
 
 const Navbar = () => {
   const { data: session } = useSession();
@@ -24,13 +23,11 @@ const Navbar = () => {
   const [toggleAuth, setToggleAuth] = useState(false);
   const { theme } = useTheme();
   const { onOpen } = useLoginModal();
-  //  console.log(session?.user.id);
+
+  // to fix next hydration error
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const { data } = useGetWatchlist(session?.user.id);
-  console.log(data);
 
   const renderTheme = () => {
     if (!mounted) return null;

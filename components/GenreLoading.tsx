@@ -1,8 +1,4 @@
-import React from 'react';
-
-type Props = {};
-
-const GenreLoading = (props: Props) => {
+const GenreLoading = () => {
   return (
     <div className="flex item-center justify-center ss:block ss:ml-1 animate-pulse">
       <div

@@ -1,8 +1,4 @@
-import React from 'react';
-
-interface Props {}
-
-const Loading = (props: Props) => {
+const Loading = () => {
   return (
     <div className="flex justify-around flex-wrap p-4 animate-pulse">
       {Array.from({ length: 20 }, (_, i) => {
@@ -24,6 +20,3 @@ const Loading = (props: Props) => {
 };
 
 export default Loading;
-// bg-gray-300
-
-// bg-secondaryDark

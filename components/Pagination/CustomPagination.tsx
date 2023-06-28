@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useMemo, ChangeEvent, FC } from 'react';
+import { useState, useEffect, useMemo, ChangeEvent, FC } from 'react';
 import Pagination from '@mui/material/Pagination';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { cyan, grey, blueGrey } from '@mui/material/colors';

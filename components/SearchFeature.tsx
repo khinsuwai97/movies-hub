@@ -7,7 +7,6 @@ interface SearchFeatureProps {
   setSelectedType: React.Dispatch<React.SetStateAction<string>>;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
 }
-
 const SearchFeature: FC<SearchFeatureProps> = ({
   selectedType,
   setSelectedType,

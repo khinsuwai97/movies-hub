@@ -1,5 +1,6 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import SearchFeature from '../SearchFeature';
 import useSearch from '@/hooks/useSearch';
 import Error from '../Error';
@@ -41,7 +42,12 @@ const SearchPage = () => {
     }
   }
   return (
-    <>
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <SearchFeature
         selectedType={selectedType}
         setSelectedType={setSelectedType}
@@ -56,7 +62,7 @@ const SearchPage = () => {
           totalPages={data?.total_pages!}
         />
       )}
-    </>
+    </motion.div>
   );
 };
 

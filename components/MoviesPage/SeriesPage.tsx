@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Catergories from '../Categories';
+import { motion } from 'framer-motion';
+import Categories from '../Categories';
 import Genre from '../Genre/Genre';
 import useCategoriesToggleSeries from '@/hooks/useCategoriesToggleSeries';
 import useGenres from '@/hooks/useGenres';
@@ -39,8 +40,8 @@ const SeriesPage = () => {
     setSelectedGenre('');
     closeToggle();
   };
-  let genreContent;
 
+  let genreContent;
   if (error) {
     genreContent = <Error message={error.messsage} />;
   } else if (isLoading) {
@@ -67,8 +68,13 @@ const SeriesPage = () => {
   }
 
   return (
-    <>
-      <Catergories
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Categories
         toggle={toggle}
         handleToggle={handleToggle}
         type="TV Series"
@@ -77,7 +83,7 @@ const SeriesPage = () => {
       {genreContent}
       {moviesContent}
       <CustomPagination page={page} setPage={setPage} totalPages={totalPages} />
-    </>
+    </motion.div>
   );
 };
 

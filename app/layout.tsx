@@ -34,6 +34,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-// bg-white dark:bg-primaryDark antialiased
-// bg-white text-slate-900 antialiased

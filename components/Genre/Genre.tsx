@@ -1,7 +1,5 @@
 'use client';
-import React, { FC } from 'react';
-import useGenres from '@/hooks/useGenres';
-import Error from '../Error';
+import { FC } from 'react';
 import { Genre } from '@/types';
 
 interface GenreProps {
@@ -11,16 +9,6 @@ interface GenreProps {
   genres: Genre[];
   reset: () => void;
 }
-
-// const genres = [
-//   { id: 1, type: 'Comedy' },
-//   { id: 2, type: 'Action' },
-//   { id: 3, type: 'Drama' },
-//   { id: 4, type: 'Comedy' },
-//   { id: 5, type: 'Cartoon' },
-//   { id: 6, type: 'Science Fiction' },
-
-// ];
 
 const Genre: FC<GenreProps> = ({
   onClick,
@@ -67,27 +55,3 @@ const Genre: FC<GenreProps> = ({
 };
 
 export default Genre;
-
-// const useGenre = (selectedGenres) => {
-//   if (selectedGenres.length < 1) return "";
-
-//   const GenreIds = selectedGenres.map((g) => g.id);
-//   return GenreIds.reduce((acc, curr) => acc + "," + curr);
-// };
-
-// export default useGenre;
-
-{
-  /* <div className="flex flex-wrap gap-2 text-sm px-[10px] mb-2">
-      {data?.genres.map((genre) => {
-        return (
-          <button
-            key={genre.id}
-            className=" py-1 px-2 rounded-lg bg-gray-200 dark:bg-gray-800 hover:bg-bgBlue1 hover:dark:bg-bgBlue "
-          >
-            {genre.name}
-          </button>
-        );
-      })}
-    </div> */
-}

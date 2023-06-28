@@ -2,13 +2,13 @@
 import { FC } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
 
-interface CateroriesProps {
+interface CategoriesProps {
   handleToggle: () => void;
   toggle: boolean;
   type: string;
 }
 
-const Catergories: FC<CateroriesProps> = ({ handleToggle, toggle, type }) => {
+const Categories: FC<CategoriesProps> = ({ handleToggle, toggle, type }) => {
   return (
     <div className="flex gap-3  items-center mb-2 px-[48px] md:px-0  ">
       <h1 className="uppercase tracking-wider text-center font-semibold  md:text-[26px] text-[18px] text-slate-900 dark:text-slate-200   ">
@@ -19,7 +19,7 @@ const Catergories: FC<CateroriesProps> = ({ handleToggle, toggle, type }) => {
         onClick={handleToggle}
       >
         <p className="dark:text-white font-semibold text-slate-900 tracking-wide text-sm">
-          Catergories
+          Categories
         </p>
         <HiChevronDown
           className={`w-6 text-[20px] dark:text-white text-slate-900  transition
@@ -31,4 +31,4 @@ const Catergories: FC<CateroriesProps> = ({ handleToggle, toggle, type }) => {
   );
 };
 
-export default Catergories;
+export default Categories;

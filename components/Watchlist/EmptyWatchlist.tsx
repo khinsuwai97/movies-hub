@@ -1,6 +1,4 @@
-import React from 'react';
 import { Button } from '../LinkButton';
-
 const EmptyWatchlist = () => {
   return (
     <div className="h-screen ">

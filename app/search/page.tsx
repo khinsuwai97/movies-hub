@@ -1,5 +1,3 @@
-import React from 'react';
-
 import SearchPage from '@/components/MoviesPage/SearchPage';
 
 const Search = () => {

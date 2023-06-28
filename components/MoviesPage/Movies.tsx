@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
-import Catergories from '../Categories';
+import { motion } from 'framer-motion';
+import Categories from '../Categories';
 import Genre from '../Genre/Genre';
 import useCategoriesToggleMovies from '@/hooks/useCategoriesToggleMovies';
 import useGenres from '@/hooks/useGenres';
@@ -39,7 +40,7 @@ const MoviesPage = () => {
     setSelectedGenre('');
     closeToggle();
   };
-
+  // some of the data from api in pages don't work. user can see no data in some pages so I added some fixed number but in gnere I did not fix number but show some error to user
   const totalPages = selectedGenre ? moviesData?.total_pages! : 500;
   let genreContent;
   if (error) {
@@ -68,12 +69,17 @@ const MoviesPage = () => {
   }
 
   return (
-    <>
-      <Catergories toggle={toggle} handleToggle={handleToggle} type="Movies" />
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <Categories toggle={toggle} handleToggle={handleToggle} type="Movies" />
       {genreContent}
       {moviesContent}
       <CustomPagination page={page} setPage={setPage} totalPages={totalPages} />
-    </>
+    </motion.div>
   );
 };
 

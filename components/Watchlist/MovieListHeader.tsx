@@ -1,8 +1,4 @@
-import React from 'react';
-
-interface Props {}
-
-const MovieListHeader = (props: Props) => {
+const MovieListHeader = () => {
   return (
     <div className=" movie-list-container mb-4">
       <h5>

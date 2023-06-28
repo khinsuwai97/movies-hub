@@ -1,11 +1,13 @@
 'use client';
-import React, { FC } from 'react';
+import { FC } from 'react';
+import { motion } from 'framer-motion';
 import MovieDetail from '../OverView/MovieDetail';
 import useDetail from '@/hooks/useDetail';
 import useYoutube from '@/hooks/useYoutube';
 import useCast from '@/hooks/useCasts';
 import DeatailLoading from '../DetailLoading';
 import Error from '../Error';
+
 interface DetailPageProps {
   movieId: string;
   type: string;
@@ -46,9 +48,14 @@ const DetailPage: FC<DetailPageProps> = ({ movieId, type }) => {
   }
 
   return (
-    <>
+    <motion.div
+      animate={{ opacity: 1 }}
+      initial={{ opacity: 0 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       <MovieDetail detail={data} videos={youtubeVideo} castsData={casts} />
-    </>
+    </motion.div>
   );
 };
 

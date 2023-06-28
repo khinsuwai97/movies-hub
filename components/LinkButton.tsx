@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { AiFillYoutube } from 'react-icons/ai';
 import { useRouter } from 'next/navigation';
 
 interface ButtonProps {
@@ -20,22 +19,22 @@ export const Button = ({ text, section }: ButtonProps) => {
   );
 };
 
-interface ActionButtonProps {
-  text: string;
-}
+// interface ActionButtonProps {
+//   text: string;
+// }
 
-export const TrailerButton = ({ text }: ActionButtonProps) => {
-  return (
-    <button
-      className={`px-[30px]  mt-4  py-[8px]  text-[16px] text-slate-800  dark:text-white outline-none bg-bgBlue1 dark:bg-bgBlue rounded-md font-medium cursor-pointer whitespace-nowrap flex gap-2 `}
-    >
-      <AiFillYoutube size={22} />
-      <a href="https://www.netflix.com/browse" target="_blank">
-        {text}
-      </a>
-    </button>
-  );
-};
+// export const TrailerButton = ({ text }: ActionButtonProps) => {
+//   return (
+//     <button
+//       className={`px-[30px]  mt-4  py-[8px]  text-[16px] text-slate-800  dark:text-white outline-none bg-bgBlue1 dark:bg-bgBlue rounded-md font-medium cursor-pointer whitespace-nowrap flex gap-2 `}
+//     >
+//       <AiFillYoutube size={22} />
+//       <a href="https://www.netflix.com/browse" target="_blank">
+//         {text}
+//       </a>
+//     </button>
+//   );
+// };
 
 export const BackButton = () => {
   const router = useRouter();

@@ -1,13 +1,13 @@
 'use client';
-import { useState, useCallback, FormEvent } from 'react';
+import { useState, useCallback } from 'react';
+import { toast } from 'react-hot-toast';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import axios from 'axios';
 import Input from '../Input';
 import Modal from '../Modal';
 import useRegisterModal from '@/hooks/useRegisterModal';
 import useLoginModal from '@/hooks/useLoginModal';
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
-import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
 import useFormValidation from '@/hooks/useFormValidation';
 
 const RegisterModal = () => {
@@ -37,10 +37,6 @@ const RegisterModal = () => {
     openLoginModal();
   };
 
-  // const onFormSubmit = (e: FormEvent) => {
-  //   e.preventDefault();
-  //
-
   const onSumbit = useCallback(async () => {
     const formisValid = nameIsValid && emailIsValid && passwordIsVaid;
     setValidForm({
@@ -54,7 +50,7 @@ const RegisterModal = () => {
     }
 
     setIsLoading(true);
-
+    //create an account first
     try {
       await axios.post('/api/register', {
         name,
@@ -63,6 +59,7 @@ const RegisterModal = () => {
       });
       toast.success('Account Created.');
       closeRegisterModal();
+      //after creating an account, sign automatically
       signIn('credentials', {
         email,
         password,

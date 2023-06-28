@@ -1,24 +1,15 @@
 'use client';
-
-import React, { FC, useCallback, useState, useEffect, useMemo } from 'react';
+import { FC, useCallback } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { unavailable } from '@/lib/image';
-import {
-  BsBookmarkCheck,
-  BsBookmarkCheckFill,
-  BsBookmarkFill,
-  BsFillBookmarkCheckFill,
-  BsFillBookmarkPlusFill,
-} from 'react-icons/bs';
-import useRegisterModal from '@/hooks/useRegisterModal';
-import CustomPagination from '../Pagination/CustomPagination';
-import { imagePath } from '@/lib/image';
-import { errorToast, successTaost } from '@/lib/showToast';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
+import { BsBookmarkFill, BsFillBookmarkCheckFill } from 'react-icons/bs';
+import { unavailable } from '@/lib/image';
+import useRegisterModal from '@/hooks/useRegisterModal';
+import { imagePath } from '@/lib/image';
+import { errorToast, successTaost } from '@/lib/showToast';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
-import Error from '../Error';
 
 export interface MovieListProps {
   id: number;
@@ -40,12 +31,9 @@ const MovieList: FC<MovieListProps> = ({
   type,
 }) => {
   const { onOpen } = useRegisterModal();
-
   const { data: session } = useSession();
-  const { data, error, isLoading, mutate } = useGetWatchlist();
-
+  const { data, mutate } = useGetWatchlist();
   const router = useRouter();
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const goToDetailPage = (e: any) => {
     e.stopPropagation();
@@ -68,31 +56,26 @@ const MovieList: FC<MovieListProps> = ({
       <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
     );
   }
-  const handleAddToWatchList = useCallback(
-    async (e: any) => {
-      try {
-        await axios.post('/api/watchlist/create', {
-          title,
-          image,
-          releaseDate,
-          movieId: id.toString(),
-          vote: vote.toString(),
-          userId: session?.user.id,
-        });
-        mutate();
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsSubmitting(false);
-      }
-      successTaost(title, 'was added to your watchlist.');
-    },
-    [title, image, releaseDate, vote, session?.user.id, mutate, id]
-  );
+  const handleAddToWatchList = useCallback(async () => {
+    // send data to database for watchlist
+    try {
+      await axios.post('/api/watchlist/create', {
+        title,
+        image,
+        releaseDate,
+        movieId: id.toString(),
+        vote: vote.toString(),
+        userId: session?.user.id,
+      });
+      mutate();
+    } catch (error) {
+      console.log(error);
+    }
+    successTaost(title, 'was added to your watchlist.');
+  }, [title, image, releaseDate, vote, session?.user.id, mutate, id]);
 
-  if (error) {
-    return <Error message={error} />;
-  }
+  // check movies or sereis in already in watchlist
+  const InWatchlist = data?.find((item) => item.movieId === id.toString());
 
   const handleWatchList = (e: any) => {
     if (!session?.user) {
@@ -100,16 +83,24 @@ const MovieList: FC<MovieListProps> = ({
       onOpen();
     } else {
       e.stopPropagation();
-      const checkItemInCart = data?.find(
-        (item) => item.movieId === id.toString()
-      );
-      if (checkItemInCart) {
+      if (InWatchlist) {
         errorToast(title, 'is already in your watchlist');
         return;
       }
-      handleAddToWatchList(e);
+      handleAddToWatchList();
     }
   };
+
+  let watchlistIcon;
+  if (InWatchlist) {
+    watchlistIcon = (
+      <BsFillBookmarkCheckFill className={`watchlist-icon text-pink-700`} />
+    );
+  } else {
+    watchlistIcon = (
+      <BsBookmarkFill className={`watchlist-icon text-cyan-700 `} />
+    );
+  }
 
   return (
     <div
@@ -142,13 +133,9 @@ const MovieList: FC<MovieListProps> = ({
           {Number(vote.toFixed(1))}
         </span>
       </div>
-      <span onClick={handleWatchList}>
-        {' '}
-        <BsBookmarkFill className="text-[22px] absolute text-cyan-700 left-1  top-3 cursor-pointer z-20 " />
-      </span>
+      <span onClick={handleWatchList}>{watchlistIcon}</span>
     </div>
   );
 };
 
 export default MovieList;
-// onClick={handleOpenRegister}

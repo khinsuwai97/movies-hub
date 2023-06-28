@@ -1,13 +1,13 @@
 'use client';
-import React, { FC } from 'react';
+import { FC } from 'react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import { MdOutlineDarkMode } from 'react-icons/md';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 import { HiChevronUp } from 'react-icons/hi';
 import { FiSearch } from 'react-icons/fi';
-import { BsFillPersonPlusFill } from 'react-icons/bs';
-import Link from 'next/link';
 import ThemeToggleMobile from './ThemeToggleMobile';
 import SignOutMobile from './SingOutMobile';
-import { useSession } from 'next-auth/react';
 
 interface BottomMobileMenuProps {
   onClick: () => void;
