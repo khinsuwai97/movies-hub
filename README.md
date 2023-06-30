@@ -1,34 +1,33 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Moives Hub App
 
-## Getting Started
+- Search and filter your favorite movies and series
+- keep upadated with trending movies and series
+- add your favorite to watchlist but you need to sign in or create an account to use watchlist
+- watch the trailer of each movies and series on Youtube
+- check detail of casts on each movie and series
+- read the overview of each movie and series
+- fully responsvie
 
-First, run the development server:
+## Project Specifications
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- on Home page, that is for Trending movies and series. I showed total 20 on each page.That will change daily according to TMDB api.
+- On Each Moive card you can see rating,title,release Date and type. Bookmark icon is for watchlist.To add your favorite movies and series to watchlist, you have to create an account and sign in.If you don't want to create an account, please use Google Account.So I can know which user is using this website for each individual watchlist.
+- click each card for movie and series detail. You can check moive and series overview, cast and play trailer. But you cannot play trailer of every movies and series.You can also add that movies and series to watchlist as well.please click bookmark icon.
+- on Movies and Series page, you can choose the genre you like in categories.If you want to go back to all generes. Please choose all in categories.Some of the old pages won't work becasue of api error. I show user friendly error for that problem.
+- for search icons, you can search anything. But movies are default and if you want to search sereies, click series.
+- on Watchlist page, if you already sign in, you can see your favorite watchlists, also delete each and clear all.
+- You can still use Trending page,Movies page,Series page and Search. Watchlist is only protected with authentication.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stacks
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Zustand (I use this only for Register Modal and Login Modal, I need that state some of the pages When user does not sign in)
+- Next Theme (for light and dark mode)
+- Next Authentication (Register and sign in)
+- Swr of Vercel (for data fetching and mutation)
+- MUI (pagination)
+- React-alice-carousel (casts slider)
+- Framer-motion (only for pages transition)
+- Mongodb (for database)
+- prisma (for schema)
+- CSS,Tailwind CSS
+- TypeScript,React Hooks
