@@ -31,3 +31,4 @@
 - prisma (for schema)
 - CSS,Tailwind CSS
 - TypeScript,React Hooks
+- TMDB Api (for movies and series data)
