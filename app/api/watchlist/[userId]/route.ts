@@ -17,14 +17,11 @@ export const GET = async (
       throw new Error('Invalid User Id');
     }
 
-    console.log(userId);
-
     const movies = await prisma.movie.findMany({
       where: {
         userId,
       },
     });
-    console.log(movies);
 
     return NextResponse.json(movies, { status: 200 });
   } catch (error) {
