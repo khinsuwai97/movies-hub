@@ -1,6 +1,5 @@
 'use client';
 import { useState, useCallback } from 'react';
-import { redirect } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import Modal from '../Modal';
@@ -49,7 +48,7 @@ const LoginModal = () => {
       toast.success('Signed in successfully.');
     } catch (error) {
       console.log(error);
-      // toast.error('Error with sign in.Please try again!');
+      toast.error('Error with sign in.Please try again!');
     } finally {
       setIsLoading(false);
     }

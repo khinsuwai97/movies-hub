@@ -40,6 +40,7 @@ const MoviesPage = () => {
   const resetGenre = () => {
     setSelectedGenre('');
     closeToggle();
+    setPage(1);
   };
   // some of the data from api in pages don't work. user can see no data in some pages so I added some fixed number but in gnere I did not fix number but show some error to user
   const totalPages = selectedGenre ? moviesData?.total_pages! : 500;

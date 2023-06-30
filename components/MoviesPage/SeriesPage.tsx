@@ -40,6 +40,7 @@ const SeriesPage = () => {
   const resetGenre = () => {
     setSelectedGenre('');
     closeToggle();
+    setPage(1);
   };
 
   let genreContent;

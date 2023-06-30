@@ -2,7 +2,6 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
-import { redirect, useRouter } from 'next/navigation';
 import axios from 'axios';
 import Input from '../Input';
 import Modal from '../Modal';
