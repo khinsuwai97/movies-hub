@@ -1,6 +1,5 @@
 'use client';
 import React, { FC, useCallback, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { toast } from 'react-hot-toast';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -34,7 +33,6 @@ const Modal: FC<ModalProps> = ({
   const [googleSignisLoading, setGoogleSignIsLoading] = useState(false);
   const { onClose: closeRegisterModal } = useRegisterModal();
   const { onClose: closeLoginModal } = useLoginModal();
-  const router = useRouter();
   const handleSubmit = useCallback(() => {
     if (disabled) {
       return;
@@ -53,7 +51,6 @@ const Modal: FC<ModalProps> = ({
       toast.success('Signed in successfully.');
       closeRegisterModal();
       closeLoginModal();
-      router.push('/watchlist');
     } catch (error) {
       toast.error('Error with sign in.Please try again!');
     } finally {

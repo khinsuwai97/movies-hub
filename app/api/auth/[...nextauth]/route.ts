@@ -34,6 +34,9 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: credentials.email,
           },
+          include: {
+            accounts: true,
+          },
         });
 
         if (!user || !user.hashedPassword) {
