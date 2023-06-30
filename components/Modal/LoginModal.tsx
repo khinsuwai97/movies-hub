@@ -41,15 +41,16 @@ const LoginModal = () => {
       await signIn('credentials', {
         email,
         password,
+        redirect: false,
       });
 
       closeLoginModal();
-      redirect('/');
 
       toast.success('Signed in successfully.');
+      redirect('/');
     } catch (error) {
       console.log(error);
-      toast.error('Error with sign in.Please try again!');
+      // toast.error('Error with sign in.Please try again!');
     } finally {
       setIsLoading(false);
     }

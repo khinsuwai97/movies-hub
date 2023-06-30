@@ -28,7 +28,7 @@ model Account {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
-   @@map("accounts")
+
 }
 
 model Session {
@@ -37,7 +37,7 @@ model Session {
   userId              String  @db.ObjectId
   expires             DateTime
   user                User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-   @@map("sessions")
+  
 }
 
 model User {
@@ -51,9 +51,8 @@ model User {
   updatedAt DateTime @updatedAt
   sessions Session[]
   accounts Account[]
-  favoriteIds String[] @db.ObjectId
-  movies Movie[]
-  @@map("users")
+  movies Movie[] 
+
 }
 
 model VerificationToken {
@@ -63,7 +62,7 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
-  @@map("verificationtokens")
+ 
 }
 
 

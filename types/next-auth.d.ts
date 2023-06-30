@@ -2,12 +2,12 @@
 import type { Session, User } from 'next-auth';
 import type { JWT } from 'next-auth/jwt';
 import { User as UserModel } from '@prisma/client';
+
 type UserId = string;
 
 declare module 'next-auth/jwt' {
   interface JWT {
     id: UserId;
-    name: string;
   }
 }
 declare module 'next-auth' {
@@ -16,6 +16,6 @@ declare module 'next-auth' {
       id: UserId;
       name: string;
       image: string;
-    };
+    } & DefaultSession['user'];
   }
 }
