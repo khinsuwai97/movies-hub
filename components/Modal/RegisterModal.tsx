@@ -27,7 +27,6 @@ const RegisterModal = () => {
     email,
     password
   );
-  const router = useRouter();
 
   const toggleModal = () => {
     if (isLoading) {
@@ -79,7 +78,6 @@ const RegisterModal = () => {
     email,
     password,
     closeRegisterModal,
-    router,
     nameIsValid,
     emailIsValid,
     passwordIsVaid,
