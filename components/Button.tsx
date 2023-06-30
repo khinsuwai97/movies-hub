@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { ImSpinner8 } from 'react-icons/Im';
+import { ImSpinner8 } from 'react-icons/im';
 interface ButtonProps {
   label: string;
   secondary?: boolean;
