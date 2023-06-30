@@ -63,7 +63,6 @@ const RegisterModal = () => {
         email,
         password,
       });
-      redirect('/');
     } catch {
       toast.error('Something went wrong!');
     } finally {

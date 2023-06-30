@@ -47,7 +47,6 @@ const LoginModal = () => {
       closeLoginModal();
 
       toast.success('Signed in successfully.');
-      redirect('/');
     } catch (error) {
       console.log(error);
       // toast.error('Error with sign in.Please try again!');
