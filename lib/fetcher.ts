@@ -1,5 +1,13 @@
 import axios from 'axios';
-import { MovieData } from '@/hooks/useWatchList';
+interface MovieData {
+  id: string;
+  userId: string;
+  title: string;
+  image: string;
+  releaseDate: string;
+  vote: string;
+  movieId: string;
+}
 
 const fetcher = (url: string): Promise<MovieData[]> =>
   axios.get(url).then((res) => res.data);

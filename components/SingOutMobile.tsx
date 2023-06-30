@@ -1,14 +1,15 @@
 'use client';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { BsFillPersonDashFill } from 'react-icons/bs';
 import { signOut } from 'next-auth/react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 interface SignOutMobileProps {
   closeAuth: () => void;
 }
 
 const SignOutMobile: FC<SignOutMobileProps> = ({ closeAuth }) => {
+  const router = useRouter();
   return (
     <div className="theme-toggle-signout-mobile">
       <button
@@ -16,7 +17,7 @@ const SignOutMobile: FC<SignOutMobileProps> = ({ closeAuth }) => {
         onClick={() => {
           signOut();
           closeAuth();
-          redirect('/');
+          router.push('/');
         }}
       >
         <BsFillPersonDashFill className="text-[20px]" />

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { BsFillPersonDashFill } from 'react-icons/bs';
 import { signOut, useSession } from 'next-auth/react';
 
@@ -9,10 +9,11 @@ type SignOutProps = {
 
 const SignOut: FC<SignOutProps> = ({ closeAuth }) => {
   const { data: session } = useSession();
+  const router = useRouter();
   const handleSignOut = async () => {
     await signOut();
     closeAuth();
-    redirect('/');
+    router.push('/');
   };
 
   return (

@@ -6,10 +6,10 @@ import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import { BsBookmarkFill, BsFillBookmarkCheckFill } from 'react-icons/bs';
 import { unavailable } from '@/lib/image';
-import useRegisterModal from '@/hooks/useRegisterModal';
 import { imagePath } from '@/lib/image';
 import { errorToast, successTaost } from '@/lib/showToast';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
+import useLoginModal from '@/hooks/useLoginModal';
 
 export interface MovieListProps {
   id: number;
@@ -30,9 +30,9 @@ const MovieList: FC<MovieListProps> = ({
   vote,
   type,
 }) => {
-  const { onOpen } = useRegisterModal();
+  const { onOpen } = useLoginModal();
   const { data: session } = useSession();
-  const { data, mutate } = useGetWatchlist();
+  const { data, mutate } = useGetWatchlist(session?.user.id!);
   const router = useRouter();
 
   const goToDetailPage = (e: any) => {
@@ -74,8 +74,9 @@ const MovieList: FC<MovieListProps> = ({
     successTaost(title, 'was added to your watchlist.');
   }, [title, image, releaseDate, vote, session?.user.id, mutate, id]);
 
-  // check movies or sereis in already in watchlist
-  const InWatchlist = data?.find((item) => item.movieId === id.toString());
+  const alreadyInWatchlist = data?.find(
+    (item) => item.movieId === id.toString()
+  );
 
   const handleWatchList = (e: any) => {
     if (!session?.user) {
@@ -83,7 +84,7 @@ const MovieList: FC<MovieListProps> = ({
       onOpen();
     } else {
       e.stopPropagation();
-      if (InWatchlist) {
+      if (alreadyInWatchlist) {
         errorToast(title, 'is already in your watchlist');
         return;
       }
@@ -92,7 +93,7 @@ const MovieList: FC<MovieListProps> = ({
   };
 
   let watchlistIcon;
-  if (InWatchlist) {
+  if (alreadyInWatchlist) {
     watchlistIcon = (
       <BsFillBookmarkCheckFill className={`watchlist-icon text-pink-700`} />
     );

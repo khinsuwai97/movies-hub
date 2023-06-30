@@ -1,8 +1,7 @@
 import useSWR from 'swr';
 import fetcher from '@/lib/fetcher';
-const useGetWatchlist = () => {
-  // const url = !userId ? `api/posts` : `api/posts/${userId}`;
-  const url = `/api/watchlist/getlist`;
+const useGetWatchlist = (userId: string) => {
+  const url = userId ? `/api/watchlist/${userId}` : null;
   const { data, error, isLoading, mutate } = useSWR(url, fetcher);
 
   return {

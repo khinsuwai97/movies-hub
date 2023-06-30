@@ -3,19 +3,28 @@ import prisma from '@/lib/prismadb';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../auth/[...nextauth]/route';
 
-export const GET = async (req: Request) => {
-  const currentUser = await getServerSession(authOptions);
-  const userId = currentUser?.user.id;
+interface UserIdParams {
+  params: {
+    userId: string;
+  };
+}
+export const GET = async (
+  req: Request,
+  { params: { userId } }: UserIdParams
+) => {
   try {
     if (!userId && typeof userId !== 'string') {
       throw new Error('Invalid User Id');
     }
+
+    console.log(userId);
 
     const movies = await prisma.movie.findMany({
       where: {
         userId,
       },
     });
+    console.log(movies);
 
     return NextResponse.json(movies, { status: 200 });
   } catch (error) {

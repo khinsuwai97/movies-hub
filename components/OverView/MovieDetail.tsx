@@ -23,7 +23,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
   const genre = detail.genres.map((g) => g.name).join(',');
   const video = videos?.results?.map((v) => v.key);
   const { data: session } = useSession();
-  const { data, mutate } = useGetWatchlist();
+  const { data, mutate } = useGetWatchlist(session?.user.id!);
   const { onOpen } = useLoginModal();
 
   const handleAddToWatchList = useCallback(async () => {
@@ -52,7 +52,21 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
     mutate,
     session?.user.id,
   ]);
-  const InWatchList = data?.find(
+
+  // const alreadyInWatchlist = () => {
+  //   if (!data || !session) {
+  //     return;
+  //   } else if (session || !data) {
+  //     return;
+  //   } else if (session && data) {
+  //     // check movies or sereis in already in watchlist
+  //     const InWatchlist = data?.find(
+  //       (item) => item.movieId === detail.id.toString()
+  //     );
+  //     return InWatchlist;
+  //   }
+  // };
+  const alreadyInWatchlist = data?.find(
     (item) => item.movieId === detail.id.toString()
   );
 
@@ -60,7 +74,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
     if (!session?.user) {
       onOpen();
     } else {
-      if (InWatchList) {
+      if (alreadyInWatchlist) {
         errorToast(detail.title || detail.name, 'is already in your watchlist');
         return;
       }
@@ -101,7 +115,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
               className={`w-[30px] h-[30px] rounded-full flex justify-center items-center  cursor-pointer bg-slate-200  dark:bg-gray-600   z-20`}
               onClick={handleWatchList}
             >
-              {InWatchList ? (
+              {alreadyInWatchlist ? (
                 <BsFillBookmarkCheckFill size={15} />
               ) : (
                 <BsBookmarkFill size={15} />

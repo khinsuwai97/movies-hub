@@ -2,7 +2,7 @@
 import { useState, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import axios from 'axios';
 import Input from '../Input';
 import Modal from '../Modal';
@@ -64,7 +64,7 @@ const RegisterModal = () => {
         email,
         password,
       });
-      router.push('/watchlist');
+      redirect('/');
     } catch {
       toast.error('Something went wrong!');
     } finally {

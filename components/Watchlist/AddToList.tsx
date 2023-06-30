@@ -5,9 +5,11 @@ import useGetWatchlist from '@/hooks/useGetWatchlist';
 import Error from '../Error';
 import axios from 'axios';
 import { successTaost, errorToast } from '@/lib/showToast';
+import { useSession } from 'next-auth/react';
 
 const AddtoList = () => {
-  const { data, error, isLoading, mutate } = useGetWatchlist();
+  const { data: session } = useSession();
+  const { data, error, isLoading, mutate } = useGetWatchlist(session?.user.id!);
 
   if (error) {
     return <Error message="Something went wrong" />;
@@ -15,10 +17,6 @@ const AddtoList = () => {
 
   if (isLoading) {
     return <p className="text-[16px] text-center">Preparing watchlist ....</p>;
-  }
-
-  if (!data) {
-    return;
   }
 
   const clearWatchlist = async () => {
@@ -34,18 +32,19 @@ const AddtoList = () => {
 
   return (
     <>
-      {data?.map((item) => {
-        return (
-          <AddToListItem
-            key={item.id}
-            id={item.id}
-            title={item.title}
-            image={item.image}
-            releaseDate={item.releaseDate}
-            vote={+item.vote}
-          />
-        );
-      })}
+      {data &&
+        data?.map((item) => {
+          return (
+            <AddToListItem
+              key={item.id}
+              id={item.id}
+              title={item.title}
+              image={item.image}
+              releaseDate={item.releaseDate}
+              vote={+item.vote}
+            />
+          );
+        })}
       <div className="flex justify-end mb-[90px]">
         <Button label="Clear List" onClick={clearWatchlist} />
       </div>

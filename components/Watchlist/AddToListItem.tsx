@@ -6,6 +6,7 @@ import { unavailable } from '@/lib/image';
 import { imagePath } from '@/lib/image';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
 import { errorToast, successTaost } from '@/lib/showToast';
+import { useSession } from 'next-auth/react';
 
 interface AddtoListItemProps {
   id: string;
@@ -22,7 +23,8 @@ const AddToListItem: FC<AddtoListItemProps> = ({
   releaseDate,
   vote,
 }) => {
-  const { mutate } = useGetWatchlist();
+  const { data: session } = useSession();
+  const { mutate } = useGetWatchlist(session?.user.id!);
 
   const deleteWatchlist = async () => {
     try {

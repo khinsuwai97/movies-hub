@@ -5,13 +5,6 @@
 @tailwind utilities;
 
 .text-gradient {
-  /* background-image: linear-gradient(
-    to right top,
-    #22b8cf,
-    #7dc7e7,
-    rgb(1, 180, 228)
-  ); */
-
   background-image: linear-gradient(
     to right top,
 
@@ -20,12 +13,9 @@
     #3bc9db
   );
 
-  /* #e2e9fa,
-  #ffffff */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  /* color: rgb(1, 180, 228); */
 }
 
 /* Tailwind styles */
@@ -86,27 +76,7 @@
   overflow: hidden;
 }
 
-/* Loader */
-.loader {
-  width: 48px;
-  height: 48px;
-  border: 5px solid #fff;
-  border-bottom-color: transparent;
-  border-radius: 50%;
-  display: inline-block;
-  box-sizing: border-box;
-  animation: rotation 1s linear infinite;
-}
-
-@keyframes rotation {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
+/* for Login & Register Form */
 .invalid-form-text {
   @apply text-base text-red-700;
 }

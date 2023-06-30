@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
-import useRegisterModal from '@/hooks/useRegisterModal';
+import useLoginModal from '@/hooks/useLoginModal';
 
 interface NavbarItemsProps {
   title: string;
@@ -12,7 +12,7 @@ interface NavbarItemsProps {
 const NavbarItems: FC<NavbarItemsProps> = ({ title, href, auth }) => {
   const { data: session } = useSession();
   const router = useRouter();
-  const { onOpen } = useRegisterModal();
+  const { onOpen } = useLoginModal();
 
   const handleNavigation = () => {
     if (auth && !session?.user) {

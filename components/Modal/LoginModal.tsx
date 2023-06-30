@@ -42,9 +42,11 @@ const LoginModal = () => {
         email,
         password,
       });
+
       closeLoginModal();
+      redirect('/');
+
       toast.success('Signed in successfully.');
-      redirect('/watchlist');
     } catch (error) {
       console.log(error);
       toast.error('Error with sign in.Please try again!');
