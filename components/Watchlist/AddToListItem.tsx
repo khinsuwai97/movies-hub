@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { BsFillBookmarkXFill, BsStarFill } from 'react-icons/bs';
 import { unavailable } from '@/lib/image';
@@ -14,6 +15,8 @@ interface AddtoListItemProps {
   image: string;
   releaseDate: string;
   vote: number;
+  mediaType: string;
+  movieId: string;
 }
 
 const AddToListItem: FC<AddtoListItemProps> = ({
@@ -22,9 +25,12 @@ const AddToListItem: FC<AddtoListItemProps> = ({
   image,
   releaseDate,
   vote,
+  mediaType,
+  movieId,
 }) => {
   const { data: session } = useSession();
   const { mutate } = useGetWatchlist(session?.user.id!);
+  const router = useRouter();
 
   const deleteWatchlist = async () => {
     try {
@@ -36,10 +42,22 @@ const AddToListItem: FC<AddtoListItemProps> = ({
     }
   };
 
+  const goToDeatail = () => {
+    if (mediaType === 'movie') {
+      router.push(`/movie/${movieId}`);
+    }
+    if (mediaType === 'tv') {
+      router.push(`/tv/${movieId}`);
+    }
+  };
+
   return (
     <div>
       <div className="movie-list-container justify-between">
-        <div className="flex items-center gap-4 mb-4">
+        <div
+          className="flex items-center gap-4 mb-4 cursor-pointer"
+          onClick={goToDeatail}
+        >
           <Image
             src={image ? `${imagePath}${image}` : unavailable}
             alt={title || 'movies/series photo'}

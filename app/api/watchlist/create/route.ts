@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 export const POST = async (req: Request, res: Response) => {
   const body = await req.json();
-  const { title, image, releaseDate, vote, userId, movieId } = body;
+  const { title, image, releaseDate, vote, userId, movieId, mediaType } = body;
   try {
     const movies = await prisma.movie.create({
       data: {
@@ -13,6 +13,7 @@ export const POST = async (req: Request, res: Response) => {
         releaseDate,
         vote,
         userId,
+        mediaType,
       },
     });
     return NextResponse.json(movies, { status: 200 });

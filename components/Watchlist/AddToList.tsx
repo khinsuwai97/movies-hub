@@ -42,6 +42,8 @@ const AddtoList = () => {
               image={item.image}
               releaseDate={item.releaseDate}
               vote={+item.vote}
+              mediaType={item.mediaType}
+              movieId={item.movieId}
             />
           );
         })}

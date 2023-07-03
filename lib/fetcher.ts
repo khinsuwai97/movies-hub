@@ -7,6 +7,7 @@ interface MovieData {
   releaseDate: string;
   vote: string;
   movieId: string;
+  mediaType: string;
 }
 
 const fetcher = (url: string): Promise<MovieData[]> =>

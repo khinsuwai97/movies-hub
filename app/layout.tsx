@@ -5,7 +5,6 @@ import Providers from '@/components/Providers';
 import RegisterModal from '@/components/Modal/RegisterModal';
 import LoginModal from '@/components/Modal/LoginModal';
 import ToasterAlert from '@/components/ToasterAlert';
-import Head from 'next/head';
 
 const inter = Rubik({ subsets: ['latin'] });
 

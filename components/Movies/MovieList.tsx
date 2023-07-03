@@ -68,13 +68,23 @@ const MovieList: FC<MovieListProps> = ({
         movieId: id.toString(),
         vote: vote.toString(),
         userId: session?.user.id,
+        mediaType,
       });
       mutate();
     } catch (error) {
       console.log(error);
     }
     successTaost(title, 'was added to your watchlist.');
-  }, [title, image, releaseDate, vote, session?.user.id, mutate, id]);
+  }, [
+    title,
+    image,
+    releaseDate,
+    vote,
+    session?.user.id,
+    mutate,
+    id,
+    mediaType,
+  ]);
 
   const alreadyInWatchlist = data?.find(
     (item) => item.movieId === id.toString()

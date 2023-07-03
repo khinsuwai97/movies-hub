@@ -76,6 +76,7 @@ model Movie {
   releaseDate  String
   vote String
   movieId String
+  mediaType String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
