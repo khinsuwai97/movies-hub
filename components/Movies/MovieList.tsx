@@ -32,7 +32,6 @@ const MovieList: FC<MovieListProps> = ({
 }) => {
   const { onOpen } = useLoginModal();
   const { data: session } = useSession();
-  console.log(session?.user);
 
   const { data, mutate } = useGetWatchlist(session?.user.id!);
   const router = useRouter();
