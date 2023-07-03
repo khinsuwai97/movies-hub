@@ -17,14 +17,22 @@ interface MovieDeatailProps {
   detail: DetailResponse;
   videos: YoutubeVideoResponse;
   castsData: CastsResponse;
+  type: string;
 }
 
-const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
+const MovieDetail: FC<MovieDeatailProps> = ({
+  detail,
+  videos,
+  castsData,
+  type,
+}) => {
+  console.log(type);
   const genre = detail.genres.map((g) => g.name).join(',');
   const video = videos?.results?.map((v) => v.key);
   const { data: session } = useSession();
   const { data, mutate } = useGetWatchlist(session?.user.id!);
   const { onOpen } = useLoginModal();
+  console.log(detail);
 
   const handleAddToWatchList = useCallback(async () => {
     try {
@@ -35,6 +43,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
         movieId: detail.id.toString(),
         vote: detail.vote_average.toString(),
         userId: session?.user.id,
+        mediaType:type
       });
       mutate();
     } catch (error) {
@@ -51,6 +60,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({ detail, videos, castsData }) => {
     detail.vote_average,
     mutate,
     session?.user.id,
+    type
   ]);
 
   // const alreadyInWatchlist = () => {

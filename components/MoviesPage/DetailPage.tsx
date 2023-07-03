@@ -54,7 +54,12 @@ const DetailPage: FC<DetailPageProps> = ({ movieId, type }) => {
       exit={{ opacity: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <MovieDetail detail={data} videos={youtubeVideo} castsData={casts} />
+      <MovieDetail
+        detail={data}
+        videos={youtubeVideo}
+        castsData={casts}
+        type={type}
+      />
     </motion.div>
   );
 };
