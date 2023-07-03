@@ -10,7 +10,7 @@ interface CategoriesProps {
 
 const Categories: FC<CategoriesProps> = ({ handleToggle, toggle, type }) => {
   return (
-    <div className="flex gap-3  items-center mb-2 px-[48px] md:px-0  ">
+    <div className="flex gap-3 items-center mb-2 px-[48px] md:px-[28px] ">
       <h1 className="uppercase tracking-wider text-center font-semibold  md:text-[26px] text-[18px] text-slate-900 dark:text-slate-200   ">
         {type}
       </h1>
