@@ -20,7 +20,7 @@
 
 ## Tech Stacks
 
-- Zustand (I use this only for Register Modal and Login Modal, I need that state some of the pages When user does not sign in)
+- Zustand (I use this only for Register Modal and Login Modal and Categories Modal I need that state some of the pages When user does not sign in)
 - Next Theme (for light and dark mode)
 - Next Authentication (Register and sign in)
 - Swr of Vercel (for data fetching and mutation)
