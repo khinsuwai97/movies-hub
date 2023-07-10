@@ -67,7 +67,7 @@ const MovieList: FC<MovieListProps> = ({
         movieId: id.toString(),
         vote: vote.toString(),
         userId: session?.user.id,
-        mediaType,
+        mediaType: mediaType || type,
       });
       mutate();
     } catch (error) {
@@ -83,6 +83,7 @@ const MovieList: FC<MovieListProps> = ({
     mutate,
     id,
     mediaType,
+    type,
   ]);
 
   const alreadyInWatchlist = data?.find(

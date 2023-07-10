@@ -32,7 +32,6 @@ const MovieDetail: FC<MovieDeatailProps> = ({
   const { data: session } = useSession();
   const { data, mutate } = useGetWatchlist(session?.user.id!);
   const { onOpen } = useLoginModal();
-  console.log(detail);
 
   const handleAddToWatchList = useCallback(async () => {
     try {
@@ -43,7 +42,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({
         movieId: detail.id.toString(),
         vote: detail.vote_average.toString(),
         userId: session?.user.id,
-        mediaType:type
+        mediaType: type,
       });
       mutate();
     } catch (error) {
@@ -60,7 +59,7 @@ const MovieDetail: FC<MovieDeatailProps> = ({
     detail.vote_average,
     mutate,
     session?.user.id,
-    type
+    type,
   ]);
 
   // const alreadyInWatchlist = () => {
