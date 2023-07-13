@@ -27,6 +27,7 @@
 - MUI (pagination)
 - React-alice-carousel (casts slider)
 - Framer-motion (only for pages transition)
+- React-hot-toast (toaster alert)
 - Mongodb (for database)
 - prisma (for schema)
 - CSS,Tailwind CSS
