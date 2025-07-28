@@ -21,8 +21,8 @@ const Navbar = () => {
   const [toggleMode, setToggleMode] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [toggleAuth, setToggleAuth] = useState(false);
-  const { theme } = useTheme();
   const { onOpen } = useLoginModal();
+  const { theme, setTheme } = useTheme();
 
   // to fix next hydration error
   useEffect(() => {
@@ -31,11 +31,11 @@ const Navbar = () => {
 
   const renderTheme = () => {
     if (!mounted) return null;
-    if (theme === 'dark') {
+    if (theme === 'light') {
       return <MdOutlineDarkMode className="text-[24px]" />;
     }
 
-    if (theme === 'light') {
+    if (theme === 'dark') {
       return <MdOutlineWbSunny className="text-[24px]" />;
     }
   };
@@ -47,9 +47,9 @@ const Navbar = () => {
     setToggleMode(false);
   };
 
-  const handleToggleMode = () => {
-    setToggleMode((prevMode) => !prevMode);
-  };
+  // const handleToggleMode = () => {
+  //   setToggleMode((prevMode) => !prevMode);
+  // };
 
   const handleToggleAuth = () => {
     setToggleAuth((prevAuth) => !prevAuth);
@@ -95,7 +95,12 @@ const Navbar = () => {
             </ul>
           </div>
           <div className="hidden md:flex justify-between gap-8 ">
-            <button onClick={handleToggleMode} className="toggle-mode-hover">
+            <button
+              onClick={() => {
+                theme === 'dark' ? setTheme('light') : setTheme('dark');
+              }}
+              className="toggle-mode-hover"
+            >
               {renderTheme()}
             </button>
             <Link href="/search" className="toggle-mode-hover">
@@ -119,16 +124,16 @@ const Navbar = () => {
         </nav>
       </header>
       <BottomMobileMenu
-        closeTheme={closeToggleMode}
-        onClick={handleToggleMode}
+        // closeTheme={closeToggleMode}
+        // onClick={handleToggleMode}
         onOpen={onOpen}
-        toggleMode={toggleMode}
+        // toggleMode={toggleMode}
         toggleAuth={toggleAuth}
         handleToogleAuth={handleToggleAuth}
         closeAuth={closeToggleAuth}
       />
       {toggleAuth && <SignOut closeAuth={closeToggleAuth} />}
-      {toggleMode && <ThemeToggle closeTheme={closeToggleMode} />}
+      {/* {toggleMode && <ThemeToggle closeTheme={closeToggleMode} />} */}
     </>
   );
 };

@@ -1,34 +1,51 @@
 'use client';
-import { FC } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { MdOutlineDarkMode } from 'react-icons/md';
+import { MdOutlineDarkMode, MdOutlineWbSunny } from 'react-icons/md';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 import { HiChevronUp } from 'react-icons/hi';
 import { FiSearch } from 'react-icons/fi';
 import ThemeToggleMobile from './ThemeToggleMobile';
 import SignOutMobile from './SingOutMobile';
-
+import { useTheme } from 'next-themes';
 interface BottomMobileMenuProps {
-  onClick: () => void;
+  // onClick: () => void;
   onOpen: () => void;
-  closeTheme: () => void;
-  toggleMode: boolean;
+  // closeTheme: () => void;
+  // toggleMode: boolean;
   toggleAuth: boolean;
   handleToogleAuth: () => void;
   closeAuth: () => void;
 }
 
 const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
-  onClick,
+  // onClick,
   onOpen,
-  closeTheme,
-  toggleMode,
+  // closeTheme,
+  // toggleMode,
   toggleAuth,
   handleToogleAuth,
   closeAuth,
 }) => {
   const { data: session } = useSession();
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+  // to fix next hydration error
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const renderTheme = () => {
+    if (!mounted) return null;
+    if (theme === 'light') {
+      return <MdOutlineDarkMode className="text-[22px]" />;
+    }
+
+    if (theme === 'dark') {
+      return <MdOutlineWbSunny className="text-[22px]" />;
+    }
+  };
 
   return (
     <>
@@ -36,9 +53,11 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
         <div className="flex justify-between relative">
           <button
             className="toggle-mode-hover hover:bg-slate-200"
-            onClick={onClick}
+            onClick={() => {
+              theme === 'dark' ? setTheme('light') : setTheme('dark');
+            }}
           >
-            <MdOutlineDarkMode className="text-[22px]" />
+            {renderTheme()}
           </button>
           <Link href="/search" className="toggle-mode-hover hover:bg-slate-200">
             <FiSearch className=" text-[22px] " />
@@ -59,8 +78,8 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
               <BsFillPersonPlusFill className=" text-[22px] " />
             </button>
           )}
-
-          {toggleMode && <ThemeToggleMobile closeTheme={closeTheme} />}
+          {/* 
+          {toggleMode && <ThemeToggleMobile closeTheme={closeTheme} />} */}
           {toggleAuth && <SignOutMobile closeAuth={closeAuth} />}
         </div>
       </nav>
