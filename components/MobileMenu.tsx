@@ -5,15 +5,15 @@ import { navLinks } from '@/data';
 import useRegisterModal from '@/hooks/useRegisterModal';
 
 const MobileMenu = () => {
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
   const router = useRouter();
-  const { onOpen } = useRegisterModal();
+  // const { onOpen } = useRegisterModal();
   const handleNavigation = (href: string, auth: boolean | undefined) => {
-    if (auth && !session?.user) {
-      onOpen();
-    } else if (href) {
-      router.push(href);
-    }
+    // if (auth && !session?.user) {
+    //   onOpen();
+    // } else if (href) {
+    router.push(href);
+    // }
   };
   return (
     <div className="dark:bg-primaryDark bg-white  w-40 absolute top-[70%] right-[6%]  py-5 flex-col border-2 dark:border-gray-800 z-30 shadow-md rounded-[10px]  border-slate-300 flex ">
