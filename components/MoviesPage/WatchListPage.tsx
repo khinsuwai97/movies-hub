@@ -6,10 +6,12 @@ import MovieListHeader from '@/components/Watchlist/MovieListHeader';
 import AddtoList from '@/components/Watchlist/AddToList';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
 import { useSession } from 'next-auth/react';
-
+import useWatchList from '@/hooks/useWatchList';
 const WatchListPage = () => {
-  const { data: session } = useSession();
-  const { data } = useGetWatchlist(session?.user.id!);
+  const { watchlist: data } = useWatchList();
+  // const { data: session } = useSession();
+  // const { data } = useGetWatchlist(session?.user.id!);
+
   if (!data) {
     return;
   } else {

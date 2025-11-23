@@ -8,6 +8,7 @@ import { imagePath } from '@/lib/image';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
 import { errorToast, successTaost } from '@/lib/showToast';
 import { useSession } from 'next-auth/react';
+import useWatchList from '@/hooks/useWatchList';
 
 interface AddtoListItemProps {
   id: string;
@@ -31,12 +32,22 @@ const AddToListItem: FC<AddtoListItemProps> = ({
   const { data: session } = useSession();
   const { mutate } = useGetWatchlist(session?.user.id!);
   const router = useRouter();
+  const { remove } = useWatchList();
+
+  // const deleteWatchlist = async () => {
+  //   try {
+  //     await axios.delete(`/api/watchlist/remove?id=${id}`);
+  //     successTaost(title, 'is removed from your watchlist.');
+  //     mutate();
+  //   } catch (error) {
+  //     errorToast(title, `cannot be removed because of ${error} .`);
+  //   }
+  // };
 
   const deleteWatchlist = async () => {
     try {
-      await axios.delete(`/api/watchlist/remove?id=${id}`);
+      remove(id);
       successTaost(title, 'is removed from your watchlist.');
-      mutate();
     } catch (error) {
       errorToast(title, `cannot be removed because of ${error} .`);
     }

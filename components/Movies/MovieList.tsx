@@ -10,7 +10,7 @@ import { imagePath } from '@/lib/image';
 import { errorToast, successTaost } from '@/lib/showToast';
 import useGetWatchlist from '@/hooks/useGetWatchlist';
 import useLoginModal from '@/hooks/useLoginModal';
-
+import useWatchList from '@/hooks/useWatchList';
 export interface MovieListProps {
   id: number;
   title: string | undefined;
@@ -33,7 +33,8 @@ const MovieList: FC<MovieListProps> = ({
   const { onOpen } = useLoginModal();
   const { data: session } = useSession();
 
-  const { data, mutate } = useGetWatchlist(session?.user.id!);
+  // const { data, mutate } = useGetWatchlist(session?.user.id!);
+  const { watchlist: data, add } = useWatchList();
   const router = useRouter();
 
   const goToDetailPage = (e: any) => {
@@ -57,51 +58,75 @@ const MovieList: FC<MovieListProps> = ({
       <p className="text-sm">{mediaType === 'movie' ? 'Movie' : 'Series'}</p>
     );
   }
+  // const handleAddToWatchList = useCallback(async () => {
+  //   // send data to database for watchlist
+  //   try {
+  //     await axios.post('/api/watchlist/create', {
+  //       title,
+  //       image,
+  //       releaseDate,
+  //       movieId: id.toString(),
+  //       vote: vote.toString(),
+  //       userId: session?.user.id,
+  //       mediaType: mediaType || type,
+  //     });
+  //     mutate();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  //   successTaost(title, 'was added to your watchlist.');
+  // }, [
+  //   title,
+  //   image,
+  //   releaseDate,
+  //   vote,
+  //   session?.user.id,
+  //   mutate,
+  //   id,
+  //   mediaType,
+  //   type,
+  // ]);
   const handleAddToWatchList = useCallback(async () => {
     // send data to database for watchlist
     try {
-      await axios.post('/api/watchlist/create', {
+      add({
+        id,
         title,
         image,
+        mediaType,
         releaseDate,
-        movieId: id.toString(),
-        vote: vote.toString(),
-        userId: session?.user.id,
-        mediaType: mediaType || type,
+        vote,
+        type,
       });
-      mutate();
     } catch (error) {
       console.log(error);
     }
     successTaost(title, 'was added to your watchlist.');
-  }, [
-    title,
-    image,
-    releaseDate,
-    vote,
-    session?.user.id,
-    mutate,
-    id,
-    mediaType,
-    type,
-  ]);
+  }, [add, id, title, image, mediaType, releaseDate, vote, type]);
 
-  const alreadyInWatchlist = data?.find(
-    (item) => item.movieId === id.toString()
-  );
+  const alreadyInWatchlist = data?.find((item) => item.id === id);
+
+  // const handleWatchList = (e: any) => {
+  //   if (!session?.user) {
+  //     e.stopPropagation();
+  //     onOpen();
+  //   } else {
+  //     e.stopPropagation();
+  //     if (alreadyInWatchlist) {
+  //       errorToast(title, 'is already in your watchlist');
+  //       return;
+  //     }
+  //     handleAddToWatchList();
+  //   }
+  // };
 
   const handleWatchList = (e: any) => {
-    if (!session?.user) {
-      e.stopPropagation();
-      onOpen();
-    } else {
-      e.stopPropagation();
-      if (alreadyInWatchlist) {
-        errorToast(title, 'is already in your watchlist');
-        return;
-      }
-      handleAddToWatchList();
+    e.stopPropagation();
+    if (alreadyInWatchlist) {
+      errorToast(title, 'is already in your watchlist');
+      return;
     }
+    handleAddToWatchList();
   };
 
   let watchlistIcon;

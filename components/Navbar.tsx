@@ -107,7 +107,7 @@ const Navbar = () => {
               <FiSearch className="text-[24px] " />
             </Link>
 
-            {session && session?.user ? (
+            {/* {session && session?.user ? (
               <button
                 className={`toggle-mode-hover flex items-center`}
                 onClick={handleToggleAuth}
@@ -119,7 +119,7 @@ const Navbar = () => {
               <button className="toggle-mode-hover" onClick={onOpen}>
                 <BsFillPersonPlusFill className=" text-[24px] " />
               </button>
-            )}
+            )} */}
           </div>
         </nav>
       </header>

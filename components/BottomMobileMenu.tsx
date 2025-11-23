@@ -62,7 +62,7 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
           <Link href="/search" className="toggle-mode-hover hover:bg-slate-200">
             <FiSearch className=" text-[22px] " />
           </Link>
-          {session && session?.user ? (
+          {/* {session && session?.user ? (
             <button
               className={`toggle-mode-hover hover:bg-slate-200 flex items-center`}
               onClick={handleToogleAuth}
@@ -80,7 +80,7 @@ const BottomMobileMenu: FC<BottomMobileMenuProps> = ({
           )}
           {/* 
           {toggleMode && <ThemeToggleMobile closeTheme={closeTheme} />} */}
-          {toggleAuth && <SignOutMobile closeAuth={closeAuth} />}
+          {/* {toggleAuth && <SignOutMobile closeAuth={closeAuth} />}  */}
         </div>
       </nav>
     </>

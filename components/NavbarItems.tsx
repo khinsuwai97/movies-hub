@@ -15,11 +15,11 @@ const NavbarItems: FC<NavbarItemsProps> = ({ title, href, auth }) => {
   const { onOpen } = useLoginModal();
 
   const handleNavigation = () => {
-    if (auth && !session?.user) {
-      onOpen();
-    } else if (href) {
-      router.push(href);
-    }
+    // if (auth && !session?.user) {
+    //   onOpen();
+    // } else if (href) {
+    router.push(href);
+    // }
   };
 
   return (

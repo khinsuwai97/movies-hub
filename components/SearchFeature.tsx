@@ -13,8 +13,6 @@ const SearchFeature: FC<SearchFeatureProps> = ({
   setQuery,
 }) => {
   const [searchTerm, setSerchTerm] = useState('');
-  console.log(searchTerm);
-
   const handleFormSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (searchTerm.trim() === '' || searchTerm.length === 0) {
